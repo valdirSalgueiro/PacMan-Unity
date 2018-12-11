@@ -309,33 +309,51 @@ public class GameManager : MonoBehaviour
 
     void draw()
     {
+        int numPoints = 10;
+
         for (int i = 0; i < this.paths.Count; i++)
         {
             List<Vector3> positions = new List<Vector3>();
             var lineRenderer = new GameObject("lineRenderer" + i).AddComponent<LineRenderer>();
             var path = this.paths[i];
 
-            positions.Add(new Vector3(path[0].x, path[0].y, 0));
+            positions.Add(new Vector3(path[0].x*2, path[0].y * 2, 0));
             int j;
             for (j = 1; j < path.Count; j++)
             {
-                if (path[j].cx != null)
-                {
-                    //ctx.quadraticCurveTo(path[j].cx, path[j].cy, path[j].x, path[j].y);
-                }
-                else
-                {
-                    positions.Add(new Vector3(path[j].x, path[j].y, 0));
-                }
+                //if (path[j].cx.HasValue)
+                //{
+                //    //ctx.quadraticCurveTo(path[j].cx, path[j].cy, path[j].x, path[j].y);
+                //    for (int n = 1; n < numPoints + 1; n++)
+                //    {
+                //        float t = n / (float)numPoints;
+                //        positions.Add(CalculateQuadraticBezierPoint(path[j-1].x * 2, path[j-1].y * 2, path[j].cx.Value * 2, path[j].cy.Value * 2, path[j].x * 2, path[j].y * 2, t));
+                //    }
+                //}
+                //else
+                //{
+                //}
+                positions.Add(new Vector3(path[j].x * 2, path[j].y * 2, 0));
             }
             //ctx.quadraticCurveTo(path[j-1].x, path[0].y, path[0].x, path[0].y);
-            //ctx.fill();
-            //ctx.stroke();
+            //positions.Add(new Vector3(path[j-1].x * 2, path[j].y * 2, 0));
+            //for (int n = 1; n < numPoints + 1; n++)
+            //{
+            //    float t = n / (float)numPoints;
+            //    positions.Add(CalculateQuadraticBezierPoint(path[j - 1].x * 2, path[j - 1].y * 2, path[j-1].x * 2, path[0].y * 2, path[0].x * 2, path[0].y * 2, t));
+            //}
             lineRenderer.positionCount = positions.Count;
             lineRenderer.SetPositions(positions.ToArray());
-            lineRenderer.startWidth = 1f;
-            lineRenderer.endWidth = 1f;
+            lineRenderer.startWidth = 1.5f;
+            lineRenderer.endWidth = 1.5f;
             lineRenderer.loop = true;
         }
+    }
+
+    private Vector3 CalculateQuadraticBezierPoint(float p0x, float p0y, float p1x, float p1y, float p2x, float p2y, float t)
+    {
+        float x = (1 - t) * (1 - t) * p0x + 2 * (1 - t) * t * p1x + t * t * p2x;
+        float y = (1 - t) * (1 - t) * p0y + 2 * (1 - t) * t * p1y + t * t * p2y;
+        return new Vector3(x, y, 0);
     }
 }
