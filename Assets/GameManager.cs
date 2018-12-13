@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
                 if (tile == null)
                 {
                     var pill = Instantiate(Pill, PillContainer.transform);
-                    pill.transform.localPosition = new Vector3(i, j, 0);
+                    pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
                 }
             }
         }

@@ -161,7 +161,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 17
+  orthographic size: 272
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -238,43 +238,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &612628596 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1556402086427736, guid: 7cc9d171567386b48b6abfdaff5213d3,
-    type: 2}
-  m_PrefabInternal: {fileID: 685221636}
---- !u!50 &612628597
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 612628596}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &612628601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 612628596}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4547a064897336c4180dd0d0fad59792, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TileMap: {fileID: 2021801073}
 --- !u!1001 &685221636
 Prefab:
   m_ObjectHideFlags: 0
@@ -288,7 +251,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4452053224567748, guid: 7cc9d171567386b48b6abfdaff5213d3, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -10
+      value: -160
       objectReference: {fileID: 0}
     - target: {fileID: 4452053224567748, guid: 7cc9d171567386b48b6abfdaff5213d3, type: 2}
       propertyPath: m_LocalPosition.z
@@ -314,27 +277,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_GravityScale
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_AngularDrag
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_Simulated
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 58132932552718354, guid: 7cc9d171567386b48b6abfdaff5213d3,
+    - target: {fileID: 114351366162695548, guid: 7cc9d171567386b48b6abfdaff5213d3,
         type: 2}
-      propertyPath: m_Radius
-      value: 0.5
-      objectReference: {fileID: 0}
+      propertyPath: TileMap
+      value: 
+      objectReference: {fileID: 2021801073}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cc9d171567386b48b6abfdaff5213d3, type: 2}
   m_IsPrefabAsset: 0
@@ -432,7 +379,7 @@ Grid:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1879982765}
   m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellSize: {x: 16, y: 16, z: 1}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -516,7 +463,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 7, y: 7, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 0
