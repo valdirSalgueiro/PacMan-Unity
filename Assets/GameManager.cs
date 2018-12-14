@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
     public GameObject Pill;
     public GameObject PillContainer;
 
-
-
     // Use this for initialization
     void Start()
     {
@@ -25,7 +23,7 @@ public class GameManager : MonoBehaviour
                 if (((i >= -11 && i <= -9) || (i >= -6 && i <= -4) || (i >= 3 && i <= 5) || (i >= 9 && i <= 11)) && j == 10)
                     continue;
 
-                if (i > -4 && i < 3 && j > -3 && j < 3)
+                if (i > -4 && i < 3 && j > -3 && j < 2)
                     continue;
 
                 var tile = TileMap.GetTile(new Vector3Int(i, j, 0));

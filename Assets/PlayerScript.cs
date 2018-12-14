@@ -96,6 +96,12 @@ public class PlayerScript : MonoBehaviour
 
     bool isWall(Vector2Int pos)
     {
-        return TileMap.GetTile(Vector3Int.FloorToInt(new Vector3(pos.x, pos.y, 0))) != null;
+
+        return TileMap.GetTile(Vector3Int.FloorToInt(new Vector3(pos.x, pos.y, 0))) != null || isGhostArea(pos);
+    }
+
+    bool isGhostArea(Vector2Int pos)
+    {
+        return (pos.x > -4 && pos.x < 3 && pos.y > -3 && pos.y < 2);
     }
 }
