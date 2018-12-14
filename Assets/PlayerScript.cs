@@ -49,7 +49,17 @@ public class PlayerScript : MonoBehaviour
 
         if (body.position == destination)
         {
-            Vector2Int bodyPosition = Vector2Int.FloorToInt(body.position / 16);
+            if (body.position == new Vector2Int(-240, -16) && direction == Vector2Int.left)
+            {
+                body.position = new Vector2(224, -16);
+            }
+            else if (body.position == new Vector2Int(224, -16) && direction == Vector2Int.right)
+            {
+                body.position = new Vector2(-240, -16);
+            }
+
+            Vector2Int bodyPosition = Vector2Int.FloorToInt(body.position / 16);            
+
             if (direction != desiredDirection)
             {
                 if (desiredDirection == Vector2.left)

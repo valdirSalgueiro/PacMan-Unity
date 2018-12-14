@@ -27,31 +27,32 @@ public class Blinky : MonoBehaviour
     {
         if (positions == null)
         {
-            var start = Vector2Int.FloorToInt(body.position / 16);
-            goal = Vector2Int.FloorToInt(playerBody.position / 16);
-            positions = GameManager.GetPath(start, goal);
+            chasePlayer();
         }
 
-        var target = GameManager.ConvertPosition(positions[currentPos]);
-        if (body.position == target)
+        if (positions != null)
         {
-            var currentPlayerPosition = Vector2Int.FloorToInt(playerBody.position / 16);
-
-            if (currentPos < positions.Length - 1)
+            var target = GameManager.ConvertPosition(positions[currentPos]);
+            if (body.position == target)
             {
-                currentPos++;
+                if(currentPos < 5 && currentPos < positions.Length - 1)
+                    currentPos++;
+                else
+                    chasePlayer();
             }
             else
             {
-                var start = Vector2Int.FloorToInt(body.position / 16);
-                positions = GameManager.GetPath(start, currentPlayerPosition);
-                currentPos = 0;
+                var nextP = Vector2.MoveTowards(body.position, target, speed);
+                body.MovePosition(nextP);
             }
         }
-        else
-        {
-            var nextP = Vector2.MoveTowards(body.position, target, speed);
-            body.MovePosition(nextP);
-        }
+    }
+
+    private void chasePlayer()
+    {
+        var start = Vector2Int.FloorToInt(body.position / 16);
+        goal = Vector2Int.FloorToInt(playerBody.position / 16);
+        positions = GameManager.GetPath(start, goal);
+        currentPos = 0;
     }
 }
