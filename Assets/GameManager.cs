@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Assets;
+using RoyT.AStar;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -10,34 +12,50 @@ public class GameManager : MonoBehaviour
     public GameObject Pill;
     public GameObject PillContainer;
 
+    // grid is centered
+    const int startX = 15;
+    const int startY = 17; 
+
+    static RoyT.AStar.Grid grid;
+
     // Use this for initialization
     void Start()
     {
-        for (int i = -13; i < 13; i++)
+        // Create a new grid and let each cell have a default traversal cost of 1.0
+        grid = new RoyT.AStar.Grid(29, 31, 1.0f);
+
+        for (int i = -startX; i < 14; i++)
         {
-            for (int j = -16; j < 13; j++)
+            for (int j = -startY; j < 14; j++)
             {
-                if (((i >= -13 && i <= -9) || (i >= 9 && i <= 13)) && ((j >= 0 && j <= 3) || (j >= -6 && j <= -3)))
+                // do not spawn between walls
+                if (((i >= -14 && i <= -9) || (i >= 9 && i <= 13)) && ((j >= 0 && j <= 3) || (j >= -6 && j <= -3)))
                     continue;
 
-                if (((i >= -11 && i <= -9) || (i >= -6 && i <= -4) || (i >= 3 && i <= 5) || (i >= 9 && i <= 11)) && j == 10)
+                if (((i >= -12 && i <= -9) || (i >= -6 && i <= -4) || (i >= 3 && i <= 5) || (i >= 9 && i <= 11)) && j == 10)
                     continue;
 
-                if (i > -4 && i < 3 && j > -3 && j < 2)
-                    continue;
-
-                var tile = TileMap.GetTile(new Vector3Int(i, j, 0));
-                if (tile == null)
+                // do not spawn in walls or ghost area
+                if (!Utils.isWall(TileMap, new Vector2Int(i, j)))
                 {
                     var pill = Instantiate(Pill, PillContainer.transform);
                     pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
+                }
+                else
+                {
+                    grid.BlockCell(new Position(i + startX, j + startY));
                 }
             }
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public static Position[] GetPath(Vector2Int posStart, Vector2Int posEnd)
     {
+        return grid.GetPath(new Position(posStart.x + startX, posStart.y + startY), new Position(posEnd.x + startX, posEnd.y + startY), MovementPatterns.LateralOnly);
+    }
+
+    public static Vector2 ConvertPosition(Position position)
+    {
+        return new Vector2((position.X - startX) * 16, (position.Y - startY) * 16);
     }
 }

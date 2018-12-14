@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -53,36 +54,35 @@ public class PlayerScript : MonoBehaviour
             {
                 if (desiredDirection == Vector2.left)
                 {
-                    if (!isWall(bodyPosition + Vector2Int.left))
+                    if (!Utils.isWall(TileMap, bodyPosition + Vector2Int.left))
                     {
                         direction = Vector2Int.left;
                     }
                 }
                 else if (desiredDirection == Vector2.right)
                 {
-                    if (!isWall(bodyPosition + Vector2Int.right))
+                    if (!Utils.isWall(TileMap, bodyPosition + Vector2Int.right))
                     {
                         direction = Vector2Int.right;
                     }
                 }
                 else if (desiredDirection == Vector2.up)
                 {
-                    if (!isWall(bodyPosition + Vector2Int.up))
+                    if (!Utils.isWall(TileMap, bodyPosition + Vector2Int.up))
                     {
                         direction = Vector2Int.up;
                     }
                 }
                 else if (desiredDirection == Vector2.down)
                 {
-                    if (!isWall(bodyPosition + Vector2Int.down))
+                    if (!Utils.isWall(TileMap, bodyPosition + Vector2Int.down))
                     {
                         direction = Vector2Int.down;
                     }
                 }
             }
             var nextPosition = bodyPosition + direction;
-            Debug.Log(nextPosition);
-            if (!isWall(nextPosition))
+            if (!Utils.isWall(TileMap, nextPosition))
             {
                 destination = nextPosition * 16;
             }
@@ -92,16 +92,5 @@ public class PlayerScript : MonoBehaviour
             var nextP = Vector2.MoveTowards(body.position, destination, speed);
             body.MovePosition(nextP);
         }
-    }
-
-    bool isWall(Vector2Int pos)
-    {
-
-        return TileMap.GetTile(Vector3Int.FloorToInt(new Vector3(pos.x, pos.y, 0))) != null || isGhostArea(pos);
-    }
-
-    bool isGhostArea(Vector2Int pos)
-    {
-        return (pos.x > -4 && pos.x < 3 && pos.y > -3 && pos.y < 2);
     }
 }
