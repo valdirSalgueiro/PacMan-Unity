@@ -13,23 +13,37 @@ namespace Assets.Ghosts.ChaseStrategies
         private int currentPos = 0;
         private Vector2Int goal;
 
+        private Vector2Int tile;
+
 
         public void Start(Ghost ghost)
         {
             Debug.Log(ghost.name + " wandering");
+            tile = GameManager.GetRandomEdgeTile(Vector2Int.FloorToInt(ghost.body.position / 16));
             getRandomWalkableTile(ghost);
         }
 
         public bool Chase(Ghost ghost)
         {
-            if (positions != null)
+            if (ghost.body.position == ghost.warpInPositionVector2)
             {
-                ghost.target = positions[currentPos];
+                ghost.body.position = ghost.warpOutPositionVector2;
+                getRandomWalkableTile(ghost);
+            }
+            else if (ghost.body.position == ghost.warpOutPositionVector2)
+            {
+                ghost.body.position = ghost.warpInPositionVector2;
+                getRandomWalkableTile(ghost);
+            }
+
+            if (positions != null)
+            {                
                 if (ghost.body.position == ghost.target)
                 {
                     if (currentPos < positions.Length - 1)
                     {
                         currentPos++;
+                        ghost.target = positions[currentPos];
                     }
                     else
                     {
@@ -42,10 +56,30 @@ namespace Assets.Ghosts.ChaseStrategies
 
         private void getRandomWalkableTile(Ghost ghost)
         {
-            currentPos = 0;
+
+            var warpInDist = Vector2.Distance(ghost.body.position, ghost.warpInPositionVector2);
+            var warpOutDist = Vector2.Distance(ghost.body.position, ghost.warpOutPositionVector2);
+            var tileDist = Vector2.Distance(ghost.body.position, tile * 16);
+            if (warpInDist > 0 && warpInDist < tileDist)
+            {
+                goal = Vector2Int.FloorToInt(ghost.warpInPositionVector2 / 16);
+            }
+            else if (warpOutDist > 0 && warpOutDist < tileDist)
+            {
+                goal = Vector2Int.FloorToInt(ghost.warpOutPositionVector2 / 16);
+            }
+            else
+            {
+                goal = tile;
+            }
+
             var start = Vector2Int.FloorToInt(ghost.body.position / 16);
-            goal = GameManager.GetRandomEdgeTile(start);
             positions = GameManager.GetPath(start, goal);
+            currentPos = 0;
+            if (positions != null && positions.Count() > 0)
+            {
+                ghost.target = positions[currentPos];
+            }
         }
     }
 }

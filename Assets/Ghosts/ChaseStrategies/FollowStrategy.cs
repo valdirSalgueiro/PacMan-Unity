@@ -14,38 +14,32 @@ namespace Assets.Ghosts.ChaseStrategies
 
         private Vector2Int lastTilePosition;
 
-        private Vector2 warpInPosition;
-        private Vector2 warpOutPosition;
-
-        private Vector2 warpInPositionVector2;
-        private Vector2 warpOutPositionVector2;
-
+        
         public void Start(Ghost ghost)
         {
             Debug.Log(ghost.name + " following");
-
-            warpInPositionVector2 = new Vector2(ghost.WarpIn.transform.position.x, ghost.WarpIn.transform.position.y);
-            warpOutPositionVector2 = new Vector2(ghost.WarpOut.transform.position.x, ghost.WarpOut.transform.position.y);
-
-            chasePosition(ghost, ghost.playerBody.position / 16);
+            chasePosition(ghost);
         }
 
         public bool Chase(Ghost ghost)
         {
-            if (positions == null)
+            if (ghost.body.position == ghost.warpInPositionVector2)
             {
-                chasePosition(ghost, ghost.playerBody.position / 16);
+                ghost.body.position = ghost.warpOutPositionVector2;
+                chasePosition(ghost);
             }
-            else if (ghost.body.position == ghost.target && ghost.playerBody.position != ghost.body.position)
+            else if (ghost.body.position == ghost.warpOutPositionVector2)
+            {
+                ghost.body.position = ghost.warpInPositionVector2;
+                chasePosition(ghost);
+            }
+
+            if (positions != null && ghost.body.position == ghost.target && ghost.playerBody.position != ghost.body.position)
             {
                 var ghostTilePosition = Vector2Int.FloorToInt(ghost.body.position / 16);
                 if (lastTilePosition != ghostTilePosition && GameManager.isEdgeTile(ghostTilePosition))
                 {
-                    if (!positions.Contains(warpInPositionVector2) && !positions.Contains(warpInPositionVector2))
-                    {
-                        chasePosition(ghost, ghost.playerBody.position / 16);
-                    }
-
+                    chasePosition(ghost);
                     lastTilePosition = ghostTilePosition;
                 }
                 else
@@ -57,25 +51,33 @@ namespace Assets.Ghosts.ChaseStrategies
                     }
                     else
                     {
-                        if (ghost.body.position == warpInPositionVector2)
-                        {
-                            ghost.body.position = warpOutPositionVector2;
-                        }
-                        else if (ghost.body.position == warpOutPositionVector2)
-                        {
-                            ghost.body.position = warpInPositionVector2;
-                        }
-                        chasePosition(ghost, ghost.playerBody.position / 16);                        
+                        chasePosition(ghost);
                     }
                 }
             }
             return false;
         }
 
-        private void chasePosition(Ghost ghost, Vector2 chasePosition)
+        private void chasePosition(Ghost ghost)
         {
+            Vector2Int goal;
+            var warpInDist = Vector2.Distance(ghost.body.position, ghost.warpInPositionVector2);
+            var warpOutDist = Vector2.Distance(ghost.body.position, ghost.warpOutPositionVector2);
+            if (warpInDist > 0 && warpInDist < Vector2.Distance(ghost.body.position, ghost.playerBody.position))
+            {
+                goal = Vector2Int.FloorToInt(ghost.warpInPositionVector2 / 16);
+            }
+            else if (warpOutDist > 0 && warpOutDist < Vector2.Distance(ghost.body.position, ghost.playerBody.position))
+            {
+                goal = Vector2Int.FloorToInt(ghost.warpOutPositionVector2 / 16);
+            }
+            else
+            {
+                goal = Vector2Int.FloorToInt(ghost.playerBody.position / 16);
+            }
+
             var start = Vector2Int.FloorToInt(ghost.body.position / 16);
-            var goal = Vector2Int.FloorToInt(chasePosition);
+
             positions = GameManager.GetPath(start, goal);
             currentPos = 0;
             if (positions != null && positions.Count() > 0)

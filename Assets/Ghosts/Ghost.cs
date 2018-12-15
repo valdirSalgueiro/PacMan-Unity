@@ -30,6 +30,10 @@ namespace Assets
 
         public List<IChaseStrategy> chaseStrategies = new List<IChaseStrategy>();
 
+        public Vector2 warpInPositionVector2;
+        public Vector2 warpOutPositionVector2;
+
+
         // Use this for initialization
         void Start()
         {
@@ -38,6 +42,10 @@ namespace Assets
             playerBody = playerGameObject.GetComponent<Rigidbody2D>();
             player = playerGameObject.GetComponent<Player>();
 
+
+            warpInPositionVector2 = new Vector2(WarpIn.transform.position.x, WarpIn.transform.position.y);
+            warpOutPositionVector2 = new Vector2(WarpOut.transform.position.x, WarpOut.transform.position.y);
+
             SpawningLocation = body.position;
             state = new DeadState(this, DeadTimer);
         }
@@ -45,7 +53,7 @@ namespace Assets
         void FixedUpdate()
         {
             var nextState = state.Update(this);
-            if(nextState != null)
+            if (nextState != null)
             {
                 state = nextState;
                 state.Start(this);

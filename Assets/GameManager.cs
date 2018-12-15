@@ -12,10 +12,10 @@ public class GameManager : MonoBehaviour
     public GameObject Pill;
     public GameObject PillContainer;
 
-    static int startX = 14;
+    static int startX = 15;
     static int startY = 17;
 
-    static int endX = 14;
+    static int endX = 15;
     static int endY = 14;
 
     private static RoyT.AStar.Grid grid;
@@ -106,10 +106,6 @@ public class GameManager : MonoBehaviour
 
     public static bool isWall(Tilemap tilemap, Vector2Int pos)
     {
-        if ((pos.x <= -startX || pos.x >= endX) && pos.y != -1) //warpin
-        {
-            return true;
-        }
         return tilemap.GetTile(Vector3Int.FloorToInt(new Vector3(pos.x, pos.y, 0))) != null;
     }
 

@@ -51,13 +51,15 @@ public class Player : MonoBehaviour
 
         if (body.position == destination)
         {
-            if (transform.position == WarpIn.transform.position && direction == Vector2Int.left)
+            if (transform.position.x <= WarpIn.transform.position.x)
             {
                 transform.position = WarpOut.transform.position;
+                direction = desiredDirection = Vector2Int.left;
             }
-            else if (transform.position == WarpOut.transform.position && direction == Vector2Int.right)
+            else if (transform.position.x >= WarpOut.transform.position.x)
             {
                 transform.position = WarpIn.transform.position;
+                direction = desiredDirection = Vector2Int.right;
             }
 
             Vector2Int bodyPosition = Vector2Int.FloorToInt(body.position / 16);
