@@ -12,10 +12,11 @@ namespace Assets
 {
     public class Ghost : MonoBehaviour
     {
-        public GameObject player;
+        public GameObject playerGameObject;
         public Vector2 target;
         public Rigidbody2D body;
         public Rigidbody2D playerBody;
+        public Player player;
 
         private Animator animator;
 
@@ -24,14 +25,18 @@ namespace Assets
 
         protected float DeadTimer;
 
-        public IChaseStrategy chaseStrategy;
+        public GameObject WarpIn;
+        public GameObject WarpOut;
+
+        public List<IChaseStrategy> chaseStrategies = new List<IChaseStrategy>();
 
         // Use this for initialization
         void Start()
         {
             body = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
-            playerBody = player.GetComponent<Rigidbody2D>();
+            playerBody = playerGameObject.GetComponent<Rigidbody2D>();
+            player = playerGameObject.GetComponent<Player>();
 
             SpawningLocation = body.position;
             state = new DeadState(this, DeadTimer);

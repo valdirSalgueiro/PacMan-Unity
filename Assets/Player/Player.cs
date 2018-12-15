@@ -5,9 +5,9 @@ using UnityEngine.Tilemaps;
 public class Player : MonoBehaviour
 {
     public Tilemap TileMap;
+    public Vector2Int direction;
 
     private float speed = 3f;
-    private Vector2Int direction;
     private Vector2Int desiredDirection;
     private Vector2 destination;
     private Rigidbody2D body;
@@ -66,35 +66,35 @@ public class Player : MonoBehaviour
             {
                 if (desiredDirection == Vector2.left)
                 {
-                    if (!Utils.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.left))
+                    if (!GameManager.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.left))
                     {
                         direction = Vector2Int.left;
                     }
                 }
                 else if (desiredDirection == Vector2.right)
                 {
-                    if (!Utils.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.right))
+                    if (!GameManager.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.right))
                     {
                         direction = Vector2Int.right;
                     }
                 }
                 else if (desiredDirection == Vector2.up)
                 {
-                    if (!Utils.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.up))
+                    if (!GameManager.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.up))
                     {
                         direction = Vector2Int.up;
                     }
                 }
                 else if (desiredDirection == Vector2.down)
                 {
-                    if (!Utils.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.down))
+                    if (!GameManager.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.down))
                     {
                         direction = Vector2Int.down;
                     }
                 }
             }
             var nextPosition = bodyPosition + direction;
-            if (!Utils.isWallOrGhostArea(TileMap, nextPosition))
+            if (!GameManager.isWallOrGhostArea(TileMap, nextPosition))
             {
                 destination = nextPosition * 16;
             }

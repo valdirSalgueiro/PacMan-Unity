@@ -184,7 +184,32 @@ Prefab:
         type: 2}
       propertyPath: player
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114917327346444898, guid: 2dccea7cc22d7724aa9762f7da63a0d4,
+        type: 2}
+      propertyPath: playerGameObject
+      value: 
       objectReference: {fileID: 1289248523}
+    - target: {fileID: 114917327346444898, guid: 2dccea7cc22d7724aa9762f7da63a0d4,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 50032451703854506, guid: 2dccea7cc22d7724aa9762f7da63a0d4,
+        type: 2}
+      propertyPath: m_BodyType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114917327346444898, guid: 2dccea7cc22d7724aa9762f7da63a0d4,
+        type: 2}
+      propertyPath: WarpIn
+      value: 
+      objectReference: {fileID: 87995070}
+    - target: {fileID: 114917327346444898, guid: 2dccea7cc22d7724aa9762f7da63a0d4,
+        type: 2}
+      propertyPath: WarpOut
+      value: 
+      objectReference: {fileID: 1550438591}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dccea7cc22d7724aa9762f7da63a0d4, type: 2}
   m_IsPrefabAsset: 0
@@ -312,7 +337,27 @@ Prefab:
         type: 2}
       propertyPath: player
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114747413518984586, guid: 5d3c4987ac9d5d148afc464a83cad5e2,
+        type: 2}
+      propertyPath: playerGameObject
+      value: 
       objectReference: {fileID: 1289248523}
+    - target: {fileID: 114747413518984586, guid: 5d3c4987ac9d5d148afc464a83cad5e2,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114747413518984586, guid: 5d3c4987ac9d5d148afc464a83cad5e2,
+        type: 2}
+      propertyPath: WarpIn
+      value: 
+      objectReference: {fileID: 87995070}
+    - target: {fileID: 114747413518984586, guid: 5d3c4987ac9d5d148afc464a83cad5e2,
+        type: 2}
+      propertyPath: WarpOut
+      value: 
+      objectReference: {fileID: 1550438591}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d3c4987ac9d5d148afc464a83cad5e2, type: 2}
   m_IsPrefabAsset: 0
@@ -511,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TileMap: {fileID: 2021801073}
+  direction: {x: 0, y: 0}
   WarpIn: {fileID: 87995070}
   WarpOut: {fileID: 1550438591}
 --- !u!50 &1289248526
@@ -605,7 +651,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1289248523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -160, z: 0}
+  m_LocalPosition: {x: -96, y: -160, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -787,7 +833,27 @@ Prefab:
         type: 2}
       propertyPath: player
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114020393539061550, guid: fad35b9cfa34cef46aeb99892e39211a,
+        type: 2}
+      propertyPath: playerGameObject
+      value: 
       objectReference: {fileID: 1289248523}
+    - target: {fileID: 114020393539061550, guid: fad35b9cfa34cef46aeb99892e39211a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114020393539061550, guid: fad35b9cfa34cef46aeb99892e39211a,
+        type: 2}
+      propertyPath: WarpIn
+      value: 
+      objectReference: {fileID: 87995070}
+    - target: {fileID: 114020393539061550, guid: fad35b9cfa34cef46aeb99892e39211a,
+        type: 2}
+      propertyPath: WarpOut
+      value: 
+      objectReference: {fileID: 1550438591}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fad35b9cfa34cef46aeb99892e39211a, type: 2}
   m_IsPrefabAsset: 0
@@ -7414,7 +7480,27 @@ Prefab:
         type: 2}
       propertyPath: player
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114386598249712438, guid: a76cabf9fa7b2fd4f88de25024f2cdb3,
+        type: 2}
+      propertyPath: playerGameObject
+      value: 
       objectReference: {fileID: 1289248523}
+    - target: {fileID: 114386598249712438, guid: a76cabf9fa7b2fd4f88de25024f2cdb3,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114386598249712438, guid: a76cabf9fa7b2fd4f88de25024f2cdb3,
+        type: 2}
+      propertyPath: WarpIn
+      value: 
+      objectReference: {fileID: 87995070}
+    - target: {fileID: 114386598249712438, guid: a76cabf9fa7b2fd4f88de25024f2cdb3,
+        type: 2}
+      propertyPath: WarpOut
+      value: 
+      objectReference: {fileID: 1550438591}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a76cabf9fa7b2fd4f88de25024f2cdb3, type: 2}
   m_IsPrefabAsset: 0

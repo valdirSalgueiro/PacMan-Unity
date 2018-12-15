@@ -7,6 +7,6 @@ public class Clyde : Ghost
     public Clyde()
     {
         DeadTimer = 2f;
-        chaseStrategy = new FollowStrategy();
+        chaseStrategies.Add(new FollowStrategy());
     }
 }

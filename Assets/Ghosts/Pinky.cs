@@ -6,7 +6,9 @@ public class Pinky : Ghost
 {
     public Pinky()
     {
-        DeadTimer = 4f;
-        chaseStrategy = new FollowStrategy();
+        //DeadTimer = 4f;
+        DeadTimer = 0;
+        //chaseStrategies.Add(new AmbushStrategy());
+        chaseStrategies.Add(new WandererStrategy());
     }
 }

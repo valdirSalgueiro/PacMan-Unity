@@ -6,6 +6,6 @@ public class Blinky : Ghost
     public Blinky()
     {
         DeadTimer = 1;
-        chaseStrategy = new FollowStrategy();
+        chaseStrategies.Add(new FollowStrategy());
     }
 }

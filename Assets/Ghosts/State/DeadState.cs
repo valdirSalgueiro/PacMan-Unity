@@ -22,7 +22,7 @@ namespace Assets.Ghosts.State
 
         public void Start(Ghost ghost)
         {
-
+            Debug.Log(ghost.name + " dead state");
         }
 
         public IGhostState Update(Ghost ghost)
