@@ -1,4 +1,6 @@
-﻿using RoyT.AStar;
+﻿using Assets.Ghosts;
+using Assets.Ghosts.State;
+using RoyT.AStar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +12,13 @@ namespace Assets
     public class Ghost : MonoBehaviour
     {
         public GameObject player;
-        public Position[] positions;
-        private Rigidbody2D body;
-        private Rigidbody2D playerBody;
+        public Vector2 target;        
+        public Rigidbody2D body;
+        public Rigidbody2D playerBody;
 
-        private Vector2Int goal;
-        int currentPos = 0;
-
-        private float speed = 2f;
         private Animator animator;
+
+        protected GhostState state;
 
         // Use this for initialization
         void Start()
@@ -26,30 +26,16 @@ namespace Assets
             body = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             playerBody = player.GetComponent<Rigidbody2D>();
+
+            state = new ChaseState();
         }
 
         void FixedUpdate()
         {
-            if (positions == null)
-            {
-                chasePlayer();
-            }
+            state.update(this);
 
-            if (positions != null)
+            if (state == typeof(ChaseState))
             {
-                var target = GameManager.ConvertPosition(positions[currentPos]);
-                if (body.position == target)
-                {
-                    if (currentPos < 3 && currentPos < positions.Length - 1)
-                    {
-                        currentPos++;
-                    }
-                    else
-                    {
-                        chasePlayer();
-                    }
-                }
-
                 var direction = (target - body.position).normalized;
                 if (direction == Vector2Int.right)
                 {
@@ -63,25 +49,11 @@ namespace Assets
                 {
                     animator.SetTrigger("up");
                 }
-                else if (direction == Vector2Int.left)
+                else
                 {
-                    Debug.Log(direction);
                     animator.SetTrigger("left");
                 }
-
-
-                var nextP = Vector2.MoveTowards(body.position, target, speed);
-                body.MovePosition(nextP);
             }
-
-        }
-
-        private void chasePlayer()
-        {
-            var start = Vector2Int.FloorToInt(body.position / 16);
-            goal = Vector2Int.FloorToInt(playerBody.position / 16);
-            positions = GameManager.GetPath(start, goal);
-            currentPos = 0;
         }
     }
 }

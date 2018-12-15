@@ -30,21 +30,20 @@ public class GameManager : MonoBehaviour
         {
             for (int j = -startY; j < endY; j++)
             {
-                // do not spawn between walls
-                if (((i >= -14 && i <= -9) || (i >= 9 && i <= 13)) && ((j >= 0 && j <= 3) || (j >= -6 && j <= -3)))
-                    continue;
-
-                if (((i >= -12 && i <= -9) || (i >= -6 && i <= -4) || (i >= 3 && i <= 5) || (i >= 9 && i <= 11)) && j == 10)
-                    continue;
-
                 // do not spawn in walls or ghost area
                 if (!Utils.isWall(TileMap, new Vector2Int(i, j)))
                 {
                     if (!Utils.isGhostArea(new Vector2Int(i, j)))
-                    {                        
+                    {
+                        // do not spawn between walls
+                        if (((i >= -14 && i <= -9) || (i >= 9 && i <= 13)) && ((j >= 0 && j <= 3) || (j >= -6 && j <= -3)))
+                            continue;
+
+                        if (((i >= -12 && i <= -9) || (i >= -6 && i <= -4) || (i >= 3 && i <= 5) || (i >= 9 && i <= 11)) && j == 10)
+                            continue;
+
                         var pill = Instantiate(Pill, PillContainer.transform);
                         pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
-
                     }
                 }
                 else

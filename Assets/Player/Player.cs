@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class PlayerScript : MonoBehaviour
+public class Player : MonoBehaviour
 {
     public Tilemap TileMap;
 
