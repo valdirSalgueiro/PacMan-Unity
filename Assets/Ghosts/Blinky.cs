@@ -1,8 +1,11 @@
 ﻿using Assets;
-using RoyT.AStar;
-using UnityEngine;
+using Assets.Ghosts.ChaseStrategies;
 
 public class Blinky : Ghost
 {
-    
+    public Blinky()
+    {
+        DeadTimer = 1;
+        chaseStrategy = new FollowStrategy();
+    }
 }

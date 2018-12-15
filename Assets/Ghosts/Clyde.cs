@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets;
+using Assets.Ghosts.ChaseStrategies;
 using UnityEngine;
 
-public class Clyde : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class Clyde : Ghost
+{
+    public Clyde()
+    {
+        DeadTimer = 2f;
+        chaseStrategy = new FollowStrategy();
+    }
 }

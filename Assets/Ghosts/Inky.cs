@@ -1,16 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Assets;
+using Assets.Ghosts.ChaseStrategies;
 using UnityEngine;
 
-public class Inky : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+public class Inky : Ghost
+{
+    public Inky()
+    {
+        DeadTimer = 3f;
+        chaseStrategy = new FollowStrategy();
+    }
 }

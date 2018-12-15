@@ -57,9 +57,10 @@ public class GameManager : MonoBehaviour
     public static Position[] GetPath(Vector2Int posStart, Vector2Int posEnd)
     {
         if (posEnd.x + startX > 0 && posEnd.x + startX < startX + endX && posEnd.y + startY > 0 && posEnd.y + startY < startY + endY)
+        {
             return grid.GetPath(new Position(posStart.x + startX, posStart.y + startY), new Position(posEnd.x + startX, posEnd.y + startY), MovementPatterns.LateralOnly);
-        else
-            return null;
+        }
+        return null;
     }
 
     public static Vector2 ConvertPosition(Position position)

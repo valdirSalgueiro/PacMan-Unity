@@ -308,6 +308,11 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 1289248523}
+    - target: {fileID: 114747413518984586, guid: 5d3c4987ac9d5d148afc464a83cad5e2,
+        type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1289248523}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d3c4987ac9d5d148afc464a83cad5e2, type: 2}
   m_IsPrefabAsset: 0
@@ -334,6 +339,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &539451620
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 539451618}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 8
 --- !u!1 &608793479
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,6 +783,11 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 1289248523}
+    - target: {fileID: 114020393539061550, guid: fad35b9cfa34cef46aeb99892e39211a,
+        type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1289248523}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fad35b9cfa34cef46aeb99892e39211a, type: 2}
   m_IsPrefabAsset: 0
@@ -789,6 +814,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &1661465529
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1661465527}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 8
 --- !u!1 &1879982765
 GameObject:
   m_ObjectHideFlags: 0
@@ -830,6 +870,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1950326167 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1870225890867720, guid: 2dccea7cc22d7724aa9762f7da63a0d4,
+    type: 2}
+  m_PrefabInternal: {fileID: 365416471}
+--- !u!58 &1950326168
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1950326167}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 8
 --- !u!1 &2021801070
 GameObject:
   m_ObjectHideFlags: 0
@@ -7350,6 +7410,11 @@ Prefab:
       propertyPath: player
       value: 
       objectReference: {fileID: 1289248523}
+    - target: {fileID: 114386598249712438, guid: a76cabf9fa7b2fd4f88de25024f2cdb3,
+        type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1289248523}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a76cabf9fa7b2fd4f88de25024f2cdb3, type: 2}
   m_IsPrefabAsset: 0
@@ -7376,3 +7441,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!58 &2139571907
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2139571905}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 8

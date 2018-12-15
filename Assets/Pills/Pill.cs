@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PillScript : MonoBehaviour
+public class Pill : MonoBehaviour
 {
     //public ScoreManager scoreManager;
 

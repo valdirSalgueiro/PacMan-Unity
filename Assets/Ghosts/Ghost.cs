@@ -1,4 +1,5 @@
 ﻿using Assets.Ghosts;
+using Assets.Ghosts.ChaseStrategies;
 using Assets.Ghosts.State;
 using RoyT.AStar;
 using System;
@@ -12,13 +13,18 @@ namespace Assets
     public class Ghost : MonoBehaviour
     {
         public GameObject player;
-        public Vector2 target;        
+        public Vector2 target;
         public Rigidbody2D body;
         public Rigidbody2D playerBody;
 
         private Animator animator;
 
-        protected GhostState state;
+        protected IGhostState state;
+        public Vector2 SpawningLocation;
+
+        protected float DeadTimer;
+
+        public IChaseStrategy chaseStrategy;
 
         // Use this for initialization
         void Start()
@@ -27,32 +33,44 @@ namespace Assets
             animator = GetComponent<Animator>();
             playerBody = player.GetComponent<Rigidbody2D>();
 
-            state = new ChaseState();
+            SpawningLocation = body.position;
+            state = new DeadState(this, DeadTimer);
         }
 
         void FixedUpdate()
         {
-            state.update(this);
-
-            if (state == typeof(ChaseState))
+            var nextState = state.Update(this);
+            if(nextState != null)
             {
-                var direction = (target - body.position).normalized;
-                if (direction == Vector2Int.right)
-                {
-                    animator.SetTrigger("right");
-                }
-                else if (direction == Vector2Int.down)
-                {
-                    animator.SetTrigger("down");
-                }
-                else if (direction == Vector2Int.up)
-                {
-                    animator.SetTrigger("up");
-                }
-                else
-                {
-                    animator.SetTrigger("left");
-                }
+                state = nextState;
+                state.Start(this);
+            }
+
+            var direction = (target - body.position).normalized;
+            if (direction == Vector2Int.right)
+            {
+                animator.SetTrigger("right");
+            }
+            else if (direction == Vector2Int.down)
+            {
+                animator.SetTrigger("down");
+            }
+            else if (direction == Vector2Int.up)
+            {
+                animator.SetTrigger("up");
+            }
+            else
+            {
+                animator.SetTrigger("left");
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Player"))
+            {
+                //Destroy(gameObject);
+                // incrementa score
             }
         }
     }
