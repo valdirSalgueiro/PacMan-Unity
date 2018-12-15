@@ -11,6 +11,11 @@ namespace Assets
     {
         public static bool isWall(Tilemap tilemap, Vector2Int pos)
         {
+            return tilemap.GetTile(Vector3Int.FloorToInt(new Vector3(pos.x, pos.y, 0))) != null;
+        }
+
+        public static bool isWallOrGhostArea(Tilemap tilemap, Vector2Int pos)
+        {
             return tilemap.GetTile(Vector3Int.FloorToInt(new Vector3(pos.x, pos.y, 0))) != null || isGhostArea(pos);
         }
 

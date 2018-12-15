@@ -66,35 +66,35 @@ public class PlayerScript : MonoBehaviour
             {
                 if (desiredDirection == Vector2.left)
                 {
-                    if (!Utils.isWall(TileMap, bodyPosition + Vector2Int.left))
+                    if (!Utils.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.left))
                     {
                         direction = Vector2Int.left;
                     }
                 }
                 else if (desiredDirection == Vector2.right)
                 {
-                    if (!Utils.isWall(TileMap, bodyPosition + Vector2Int.right))
+                    if (!Utils.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.right))
                     {
                         direction = Vector2Int.right;
                     }
                 }
                 else if (desiredDirection == Vector2.up)
                 {
-                    if (!Utils.isWall(TileMap, bodyPosition + Vector2Int.up))
+                    if (!Utils.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.up))
                     {
                         direction = Vector2Int.up;
                     }
                 }
                 else if (desiredDirection == Vector2.down)
                 {
-                    if (!Utils.isWall(TileMap, bodyPosition + Vector2Int.down))
+                    if (!Utils.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.down))
                     {
                         direction = Vector2Int.down;
                     }
                 }
             }
             var nextPosition = bodyPosition + direction;
-            if (!Utils.isWall(TileMap, nextPosition))
+            if (!Utils.isWallOrGhostArea(TileMap, nextPosition))
             {
                 destination = nextPosition * 16;
             }
@@ -108,7 +108,23 @@ public class PlayerScript : MonoBehaviour
         else
             animator.SetTrigger("run");
 
-        //transform.rotation = Quaternion.Euler(0, 90, 0);
+        if (direction == Vector2Int.down)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+        else if (direction == Vector2Int.up)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+        else if (direction == Vector2Int.right)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
 
         lastPosition = body.position;
     }

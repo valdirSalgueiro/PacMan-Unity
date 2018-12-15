@@ -40,8 +40,12 @@ public class GameManager : MonoBehaviour
                 // do not spawn in walls or ghost area
                 if (!Utils.isWall(TileMap, new Vector2Int(i, j)))
                 {
-                    var pill = Instantiate(Pill, PillContainer.transform);
-                    pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
+                    if (!Utils.isGhostArea(new Vector2Int(i, j)))
+                    {                        
+                        var pill = Instantiate(Pill, PillContainer.transform);
+                        pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
+
+                    }
                 }
                 else
                 {
