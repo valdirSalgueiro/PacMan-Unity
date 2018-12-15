@@ -1,6 +1,4 @@
 ﻿using RoyT.AStar;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Blinky : MonoBehaviour
@@ -15,11 +13,13 @@ public class Blinky : MonoBehaviour
     int currentPos = 0;
 
     private float speed = 2f;
+    private Animator animator;
 
     // Use this for initialization
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        //animator = GetComponent<Animator>();
         playerBody = player.GetComponent<Rigidbody2D>();
     }
 
@@ -35,16 +35,15 @@ public class Blinky : MonoBehaviour
             var target = GameManager.ConvertPosition(positions[currentPos]);
             if (body.position == target)
             {
-                if(currentPos < 5 && currentPos < positions.Length - 1)
+                if (currentPos < 5 && currentPos < positions.Length - 1)
                     currentPos++;
                 else
                     chasePlayer();
             }
-            else
-            {
-                var nextP = Vector2.MoveTowards(body.position, target, speed);
-                body.MovePosition(nextP);
-            }
+
+            var nextP = Vector2.MoveTowards(body.position, target, speed);
+            body.MovePosition(nextP);
+
         }
     }
 

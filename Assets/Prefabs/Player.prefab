@@ -75,7 +75,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 8, y: 8}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 8
 --- !u!114 &114351366162695548
@@ -90,6 +90,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TileMap: {fileID: 0}
+  WarpIn: {fileID: 0}
+  WarpOut: {fileID: 0}
 --- !u!212 &212231053020302886
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -122,10 +124,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1995620265
+  m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300034, guid: 179382379d6205e4e917603e70c790bf, type: 3}
+  m_Sprite: {fileID: 21300064, guid: 179382379d6205e4e917603e70c790bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

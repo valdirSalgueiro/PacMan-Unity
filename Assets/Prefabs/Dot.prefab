@@ -54,7 +54,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 8, y: 8}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 4
 --- !u!114 &114154430600126298
@@ -100,10 +100,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 620143141
+  m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300040, guid: 179382379d6205e4e917603e70c790bf, type: 3}
+  m_Sprite: {fileID: 21300080, guid: 179382379d6205e4e917603e70c790bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

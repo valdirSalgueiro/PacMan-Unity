@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Pills
+    uniqueID: 620143141
+    locked: 0
+  - name: Enemies
+    uniqueID: 1650878407
+    locked: 0
+  - name: Player
+    uniqueID: 2299347031
+    locked: 0

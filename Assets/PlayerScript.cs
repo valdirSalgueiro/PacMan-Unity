@@ -1,6 +1,4 @@
 ﻿using Assets;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -14,22 +12,26 @@ public class PlayerScript : MonoBehaviour
     private Vector2 destination;
     private Rigidbody2D body;
 
-    // can al
-    bool turn;
+    public GameObject WarpIn;
+    public GameObject WarpOut;
+
+    private Animator animator;
+    private Vector2 lastPosition;
 
     // Use this for initialization
     void Start()
     {
-        direction = Vector2Int.left;
-        desiredDirection = direction;
         body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+
+        direction = Vector2Int.left;
         destination = body.position;
+        desiredDirection = direction;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             desiredDirection = Vector2Int.left;
@@ -49,16 +51,16 @@ public class PlayerScript : MonoBehaviour
 
         if (body.position == destination)
         {
-            if (body.position == new Vector2Int(-240, -16) && direction == Vector2Int.left)
+            if (transform.position == WarpIn.transform.position && direction == Vector2Int.left)
             {
-                body.position = new Vector2(224, -16);
+                transform.position = WarpOut.transform.position;
             }
-            else if (body.position == new Vector2Int(224, -16) && direction == Vector2Int.right)
+            else if (transform.position == WarpOut.transform.position && direction == Vector2Int.right)
             {
-                body.position = new Vector2(-240, -16);
+                transform.position = WarpIn.transform.position;
             }
 
-            Vector2Int bodyPosition = Vector2Int.FloorToInt(body.position / 16);            
+            Vector2Int bodyPosition = Vector2Int.FloorToInt(body.position / 16);
 
             if (direction != desiredDirection)
             {
@@ -97,10 +99,17 @@ public class PlayerScript : MonoBehaviour
                 destination = nextPosition * 16;
             }
         }
+
+        var nextP = Vector2.MoveTowards(body.position, destination, speed);
+        body.MovePosition(nextP);
+
+        if (lastPosition == body.position)
+            animator.SetTrigger("idle");
         else
-        {
-            var nextP = Vector2.MoveTowards(body.position, destination, speed);
-            body.MovePosition(nextP);
-        }
+            animator.SetTrigger("run");
+
+        //transform.rotation = Quaternion.Euler(0, 90, 0);
+
+        lastPosition = body.position;
     }
 }
