@@ -15,7 +15,7 @@ namespace Assets.Ghosts.State
         public void Start(Ghost ghost)
         {
             speed = 2f;
-            timer = 20f;
+            timer = 30f;
 
             Debug.Log(ghost.name + " chase state");
             blinky = GameObject.FindObjectOfType<Blinky>();

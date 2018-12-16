@@ -45,8 +45,7 @@ namespace Assets.Ghosts.State
                 }
                 else
                 {
-                    //return new ScatterState(ghost);
-                    return new ChaseState();
+                    return new ScatterState(ghost);
                 }
             }
 

@@ -5,8 +5,7 @@ using UnityEngine;
 public class Pinky : Ghost
 {
     public Pinky()
-    {
-        
+    {        
         DeadTimer = 4f;
         ScatterTimer = 14;
         chaseStrategies.Add(new AmbushStrategy());
