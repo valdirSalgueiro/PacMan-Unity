@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 95766431598702508}
   m_Layer: 0
   m_Name: Pinky
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -112,10 +112,9 @@ MonoBehaviour:
   target: {x: 0, y: 0}
   body: {fileID: 0}
   playerBody: {fileID: 0}
+  spriteRenderer: {fileID: 0}
   player: {fileID: 0}
   SpawningLocation: {x: 0, y: 0}
-  DeadTimer: 0
-  ScatterTimer: 14
   WarpIn: {fileID: 0}
   WarpOut: {fileID: 0}
   warpInPositionVector2: {x: 0, y: 0}

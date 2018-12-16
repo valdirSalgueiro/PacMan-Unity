@@ -8,7 +8,7 @@ namespace Assets.Ghosts.ChaseStrategies
 {
     public interface IChaseStrategy
     {
-        void Start(Ghost ghost);
+        void Start(Ghost ghost, Ghost blinky);
         bool Chase(Ghost ghost);
     }
 }

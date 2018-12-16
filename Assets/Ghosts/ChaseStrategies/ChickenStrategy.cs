@@ -7,17 +7,22 @@ using UnityEngine;
 
 namespace Assets.Ghosts.ChaseStrategies
 {
-    public class FollowStrategy : IChaseStrategy
+    public class ChickenStrategy : IChaseStrategy
     {
         private Vector2[] positions;
         private int currentPos = 0;
 
         private Vector2Int lastTilePosition;
-        
+        private Vector2 corner;
+
         public void Start(Ghost ghost, Ghost blinky)
         {
-            Debug.Log(ghost.name + " following");
+            Debug.Log(ghost.name + " chickening");
+
             chasePosition(ghost);
+
+            var gameObjects = ghost.ScatterSpawns.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x, gameobject.transform.position.y));
+            corner = gameObjects.Skip(2).Take(1).FirstOrDefault();
         }
 
         public bool Chase(Ghost ghost)
@@ -36,6 +41,7 @@ namespace Assets.Ghosts.ChaseStrategies
             if (positions != null && ghost.body.position == ghost.target && ghost.playerBody.position != ghost.body.position)
             {
                 var ghostTilePosition = Vector2Int.FloorToInt(ghost.body.position / 16);
+                var playerDist = Vector2.Distance(ghost.body.position, ghost.playerBody.position);
                 if (lastTilePosition != ghostTilePosition && GameManager.isEdgeTile(ghostTilePosition))
                 {
                     chasePosition(ghost);
@@ -62,17 +68,25 @@ namespace Assets.Ghosts.ChaseStrategies
             Vector2Int goal;
             var warpInDist = Vector2.Distance(ghost.body.position, ghost.warpInPositionVector2);
             var warpOutDist = Vector2.Distance(ghost.body.position, ghost.warpOutPositionVector2);
-            if (warpInDist > 0 && warpInDist < Vector2.Distance(ghost.body.position, ghost.playerBody.position))
+            var playerDist = Vector2.Distance(ghost.body.position, ghost.playerBody.position);
+            if (warpInDist > 0 && warpInDist < playerDist)
             {
                 goal = Vector2Int.FloorToInt(ghost.warpInPositionVector2 / 16);
             }
-            else if (warpOutDist > 0 && warpOutDist < Vector2.Distance(ghost.body.position, ghost.playerBody.position))
+            else if (warpOutDist > 0 && warpOutDist < playerDist)
             {
                 goal = Vector2Int.FloorToInt(ghost.warpOutPositionVector2 / 16);
             }
             else
             {
-                goal = Vector2Int.FloorToInt(ghost.playerBody.position / 16);
+                if (playerDist < 16 * 8)
+                {
+                    goal = Vector2Int.FloorToInt(corner / 16);
+                }
+                else
+                {
+                    goal = Vector2Int.FloorToInt(ghost.playerBody.position / 16);
+                }
             }
 
             var start = Vector2Int.FloorToInt(ghost.body.position / 16);

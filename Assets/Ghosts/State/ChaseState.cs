@@ -7,11 +7,13 @@ namespace Assets.Ghosts.State
         private float speed = 2f;
         private int strategyIndex = 0;
         private float timer = 20f;
+        private Ghost blinky;
 
         public void Start(Ghost ghost)
         {
             Debug.Log(ghost.name + " chase state");
-            ghost.chaseStrategies[strategyIndex].Start(ghost);
+            blinky = GameObject.FindObjectOfType<Blinky>();
+            ghost.chaseStrategies[strategyIndex].Start(ghost, blinky);
         }
 
         public IGhostState Update(Ghost ghost)
@@ -27,12 +29,12 @@ namespace Assets.Ghosts.State
                 {
                     strategyIndex = 0;
                 }
-                ghost.chaseStrategies[strategyIndex].Start(ghost);
+                ghost.chaseStrategies[strategyIndex].Start(ghost, blinky);
             }
 
             if (timer <= 0)
             {
-                return new ScatterState(ghost);
+                //return new ScatterState(ghost);
             }
             timer -= Time.deltaTime;
 

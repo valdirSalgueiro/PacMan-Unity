@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Ghosts.ChaseStrategies
 {
-    public class AmbushStrategy : IChaseStrategy
+    public class InkyStrategy : IChaseStrategy
     {
         private Vector2[] positions;
         private int currentPos = 0;
@@ -19,7 +19,7 @@ namespace Assets.Ghosts.ChaseStrategies
         public void Start(Ghost ghost, Ghost blinky)
         {
             this.blinky = blinky;
-            Debug.Log(ghost.name + " ambushing");
+            Debug.Log(ghost.name + " inking");
             ambushPlayer(ghost);
         }
 
@@ -61,16 +61,16 @@ namespace Assets.Ghosts.ChaseStrategies
 
         private void ambushPlayer(Ghost ghost)
         {
-            int lookAhead = 4;
             currentPos = 0;
-            do
-            {
-                var start = Vector2Int.FloorToInt(ghost.body.position / 16);
-                goal = Vector2Int.FloorToInt(ghost.playerBody.position / 16 + ghost.player.direction * lookAhead);
-                positions = GameManager.GetPath(start, goal);
-                lookAhead -= 1;
-            }
-            while (positions == null || positions.Count() == 0);
+            Vector2 pacmanPosition = ghost.playerBody.position / 16;
+            Vector2 blinkyPosition = blinky.body.position / 16;
+            Vector2 blinkyToPacman = pacmanPosition - blinkyPosition;
+
+            Vector2 target = pacmanPosition + blinkyToPacman;
+            Vector2Int nearestTile = GameManager.getNearestNonWallTile(target);
+
+            var start = Vector2Int.FloorToInt(ghost.body.position / 16);
+            positions = GameManager.GetPath(start, nearestTile);
         }
     }
 }

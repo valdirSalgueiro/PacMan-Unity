@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private static RoyT.AStar.Grid grid;
 
     private static List<Vector2Int> edgeTiles = new List<Vector2Int>();
+    private static List<Vector2Int> nonWallTiles = new List<Vector2Int>();
     private List<Vector2> BigPillPositions;
     public GameObject BigPillGameObject;
 
@@ -68,6 +69,8 @@ public class GameManager : MonoBehaviour
                         {
                             edgeTiles.Add(new Vector2Int(i, j));
                         }
+
+                        nonWallTiles.Add(new Vector2Int(i, j));
                     }
                 }
                 else
@@ -77,6 +80,24 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public static Vector2Int getNearestNonWallTile(Vector2 target)
+    {
+        float min = 1000;
+        Vector2Int result = Vector2Int.zero;
+        foreach (var tile in nonWallTiles)
+        {
+            var dist = Vector2.Distance(tile, target);
+            if (dist < min)
+            { 
+                //if its the current closest to target
+                min = dist;
+                result = tile;
+            }
+        }
+        return result;
+    }
+
 
     public static Vector2[] GetPath(Vector2Int posStart, Vector2Int posEnd)
     {

@@ -15,7 +15,7 @@ namespace Assets.Ghosts.ChaseStrategies
         private Vector2Int tile;
 
 
-        public void Start(Ghost ghost)
+        public void Start(Ghost ghost, Ghost blinky)
         {
             Debug.Log(ghost.name + " wandering");
             tile = GameManager.GetRandomEdgeTile(Vector2Int.FloorToInt(ghost.body.position / 16));
