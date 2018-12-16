@@ -35,7 +35,7 @@ namespace Assets.Ghosts.ChaseStrategies
             Vector2 blinkyToPacman = pacmanPosition - blinkyPosition;
 
             Vector2 target = pacmanPosition + blinkyToPacman;
-            Vector2Int nearestTile = GameManager.getNearestWallkableTile(ghost.gridTiles, target);
+            Vector2Int nearestTile = GameManager.instance.getNearestWallkableTile(ghost.gridTiles, target);
 
             return nearestTile;
         }

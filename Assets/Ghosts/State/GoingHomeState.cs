@@ -12,7 +12,7 @@ namespace Assets.Ghosts.State
         public GoingHomeState(Ghost ghost)
         {
             timer = 0;
-            speed = 2f;
+            speed = 3.5f;
         }
 
         public void Exit(Ghost ghost)

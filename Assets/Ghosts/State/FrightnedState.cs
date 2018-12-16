@@ -33,6 +33,7 @@ namespace Assets.Ghosts.State
         {
             Debug.Log(ghost.name + " frightned state ");
             getNextRandomPath(ghost);
+            ghost.spriteRenderer.material.shader = shaderSpritesDefault;
         }
 
         public IGhostState Update(Ghost ghost)
@@ -88,7 +89,7 @@ namespace Assets.Ghosts.State
         private void getNextRandomPath(Ghost ghost)
         {
             var start = Vector2Int.FloorToInt(ghost.GetBody().position / 16);
-            PathFindUtils.Navigate(ghost, true, GameManager.GetRandomTile(ghost.gridTiles, start), ref positions, ref currentPosition);
+            PathFindUtils.Navigate(ghost, true, GameManager.instance.GetRandomTile(ghost.gridTiles, start), ref positions, ref currentPosition);
         }
     }
 }

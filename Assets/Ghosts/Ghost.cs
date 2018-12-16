@@ -84,7 +84,7 @@ namespace Assets
             WarpIn = GameObject.Find("WarpIn");
             WarpOut = GameObject.Find("WarpOut");
 
-            gridTiles = GameManager.InitGrid(TileMap, true);
+            gridTiles = GameManager.instance.InitGrid(TileMap, true);
 
             body = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();

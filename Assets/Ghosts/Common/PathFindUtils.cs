@@ -14,12 +14,12 @@ namespace Assets.Ghosts
 
             var cellToBlock = start - ghost.direction;
 
-            GameManager.BlockCell(ghost.gridTiles.grid, cellToBlock);
+            GameManager.instance.BlockCell(ghost.gridTiles.grid, cellToBlock);
             if (ConsiderWarps)
             {
-                var warpInDist = GameManager.GetPath(ghost.gridTiles.grid, start, Vector2Int.FloorToInt(ghost.warpInPositionVector2 / 16));
-                var warpOutDist = GameManager.GetPath(ghost.gridTiles.grid, start, Vector2Int.FloorToInt(ghost.warpOutPositionVector2 / 16));
-                var goalDist = GameManager.GetPath(ghost.gridTiles.grid, start, goal);
+                var warpInDist = GameManager.instance.GetPath(ghost.gridTiles.grid, start, Vector2Int.FloorToInt(ghost.warpInPositionVector2 / 16));
+                var warpOutDist = GameManager.instance.GetPath(ghost.gridTiles.grid, start, Vector2Int.FloorToInt(ghost.warpOutPositionVector2 / 16));
+                var goalDist = GameManager.instance.GetPath(ghost.gridTiles.grid, start, goal);
                 positions = null;
 
                 if (warpInDist != null && ((goalDist != null && warpInDist.Count() * 1.5f < goalDist.Count()) || goalDist == null))
@@ -37,9 +37,9 @@ namespace Assets.Ghosts
             }
             else
             {
-                positions = GameManager.GetPath(ghost.gridTiles.grid, start, goal);
+                positions = GameManager.instance.GetPath(ghost.gridTiles.grid, start, goal);
             }
-            GameManager.UnblockCell(ghost.gridTiles.grid, cellToBlock);
+            GameManager.instance.UnblockCell(ghost.gridTiles.grid, cellToBlock);
 
             currentPos = 0;
             if (positions != null && positions.Count() > 0)

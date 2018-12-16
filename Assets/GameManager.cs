@@ -9,7 +9,6 @@ using Grid = RoyT.AStar.Grid;
 
 public class GameManager : MonoBehaviour
 {
-
     public Tilemap TileMap;
     public GameObject Pill;
     public GameObject BigPill;
@@ -25,9 +24,20 @@ public class GameManager : MonoBehaviour
     private List<Vector2> BigPillPositions;
     public GameObject BigPillGameObject;
 
+    public static GameManager instance = null;
+
     // Use this for initialization
-    void Start()
+    void Awake()
     {
+        //Check if there is already an instance of SoundManager
+        if (instance == null)
+            //if not, set it to this.
+            instance = this;
+        //If instance already exists:
+        else if (instance != this)
+            //Destroy this, this enforces our singleton pattern so there can only be one instance of SoundManager.
+            Destroy(gameObject);
+
         BigPillPositions = BigPillGameObject.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x / 16, gameobject.transform.position.y / 16)).ToList();
 
         for (int i = -startX + 1; i < endX - 1; i++)
@@ -35,7 +45,7 @@ public class GameManager : MonoBehaviour
             for (int j = -startY; j < endY; j++)
             {
                 // do not spawn in walls or ghost area
-                if (!GameManager.isWallOrGhostArea(TileMap, new Vector2Int(i, j)))
+                if (!GameManager.instance.isWallOrGhostArea(TileMap, new Vector2Int(i, j)))
                 {
                     // do not spawn between walls
                     if (((i >= -14 && i <= -9) || (i >= 9 && i <= 13)) && ((j >= 0 && j <= 3) || (j >= -6 && j <= -3)))
@@ -60,7 +70,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    static public GridTiles InitGrid(Tilemap TileMap, bool isGhost)
+    public GridTiles InitGrid(Tilemap TileMap, bool isGhost)
     {
         GridTiles tiles = new GridTiles();
         tiles.walkableTiles = new List<Vector2Int>();
@@ -72,18 +82,18 @@ public class GameManager : MonoBehaviour
             {
                 if (isGhost)
                 {
-                    if (GameManager.isWall(TileMap, new Vector2Int(i, j)))
+                    if (GameManager.instance.isWall(TileMap, new Vector2Int(i, j)))
                     {
                         grid.BlockCell(new Position(i + startX, j + startY));
                     }
-                    else if(!GameManager.isGhostArea(new Vector2Int(i, j)))
+                    else if(!GameManager.instance.isGhostArea(new Vector2Int(i, j)))
                     {
                         tiles.walkableTiles.Add(new Vector2Int(i, j));
                     }
                 }
                 else
                 {
-                    if (GameManager.isWallOrGhostArea(TileMap, new Vector2Int(i, j)))
+                    if (GameManager.instance.isWallOrGhostArea(TileMap, new Vector2Int(i, j)))
                     {
                         grid.BlockCell(new Position(i + startX, j + startY));
                     }
@@ -94,17 +104,17 @@ public class GameManager : MonoBehaviour
         return tiles;
     }
 
-    static public void BlockCell(Grid grid, Vector2Int position)
+    public void BlockCell(Grid grid, Vector2Int position)
     {
         grid.BlockCell(new Position(position.x + startX, position.y + startY));
     }
 
-    static public void UnblockCell(Grid grid, Vector2Int position)
+    public void UnblockCell(Grid grid, Vector2Int position)
     {
         grid.UnblockCell(new Position(position.x + startX, position.y + startY));
     }
 
-    public static Vector2Int getNearestWallkableTile(GridTiles tiles, Vector2 target)
+    public Vector2Int getNearestWallkableTile(GridTiles tiles, Vector2 target)
     {
         float min = 1000;
         Vector2Int result = Vector2Int.zero;
@@ -122,7 +132,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public static Vector2[] GetPath(RoyT.AStar.Grid grid, Vector2Int posStart, Vector2Int posEnd)
+    public Vector2[] GetPath(RoyT.AStar.Grid grid, Vector2Int posStart, Vector2Int posEnd)
     {
         if (posEnd.x + startX >= 0 && posEnd.x + startX <= startX + endX && posEnd.y + startY >= 0 && posEnd.y + startY <= startY + endY)
         {
@@ -140,12 +150,12 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
-    public static Vector2 ConvertPosition(Position position)
+    public Vector2 ConvertPosition(Position position)
     {
         return new Vector2((position.X - startX) * 16, (position.Y - startY) * 16);
     }
 
-    public static Vector2Int GetRandomTile(GridTiles tiles, Vector2Int position)
+    public Vector2Int GetRandomTile(GridTiles tiles, Vector2Int position)
     {
         Vector2Int result = Vector2Int.zero;
         do
@@ -157,17 +167,17 @@ public class GameManager : MonoBehaviour
         return result;
     }
 
-    public static bool isWall(Tilemap tilemap, Vector2Int pos)
+    public bool isWall(Tilemap tilemap, Vector2Int pos)
     {
         return tilemap.GetTile(Vector3Int.FloorToInt(new Vector3(pos.x, pos.y, 0))) != null;
     }
 
-    public static bool isWallOrGhostArea(Tilemap tilemap, Vector2Int pos)
+    public bool isWallOrGhostArea(Tilemap tilemap, Vector2Int pos)
     {
         return isWall(tilemap, pos) || isGhostArea(pos);
     }
 
-    public static bool isGhostArea(Vector2Int pos)
+    public bool isGhostArea(Vector2Int pos)
     {
         return (pos.x > -4 && pos.x < 3 && pos.y > -3 && pos.y < 2);
     }

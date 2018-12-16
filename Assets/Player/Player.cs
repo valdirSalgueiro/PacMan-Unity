@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         IsDead = false;
-        grid = GameManager.InitGrid(TileMap, false);
+        grid = GameManager.instance.InitGrid(TileMap, false);
 
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -80,35 +80,35 @@ public class Player : MonoBehaviour
             {
                 if (desiredDirection == Vector2.left)
                 {
-                    if (!GameManager.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.left))
+                    if (!GameManager.instance.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.left))
                     {
                         direction = Vector2Int.left;
                     }
                 }
                 else if (desiredDirection == Vector2.right)
                 {
-                    if (!GameManager.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.right))
+                    if (!GameManager.instance.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.right))
                     {
                         direction = Vector2Int.right;
                     }
                 }
                 else if (desiredDirection == Vector2.up)
                 {
-                    if (!GameManager.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.up))
+                    if (!GameManager.instance.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.up))
                     {
                         direction = Vector2Int.up;
                     }
                 }
                 else if (desiredDirection == Vector2.down)
                 {
-                    if (!GameManager.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.down))
+                    if (!GameManager.instance.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.down))
                     {
                         direction = Vector2Int.down;
                     }
                 }
             }
             var nextPosition = bodyPosition + direction;
-            if (!GameManager.isWallOrGhostArea(TileMap, nextPosition))
+            if (!GameManager.instance.isWallOrGhostArea(TileMap, nextPosition))
             {
                 destination = nextPosition * 16;
             }

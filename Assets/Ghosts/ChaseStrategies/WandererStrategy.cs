@@ -19,7 +19,7 @@ namespace Assets.Ghosts.ChaseStrategies
         public void Start(Ghost ghost, Ghost blinky)
         {
             Debug.Log(ghost.name + " wandering");
-            tile = GameManager.GetRandomTile(ghost.gridTiles, Vector2Int.FloorToInt(ghost.GetBody().position / 16));
+            tile = GameManager.instance.GetRandomTile(ghost.gridTiles, Vector2Int.FloorToInt(ghost.GetBody().position / 16));
             chasePosition(ghost);
         }
 
