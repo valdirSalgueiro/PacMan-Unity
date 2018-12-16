@@ -23,7 +23,8 @@ namespace Assets
         protected IGhostState state;
         public Vector2 SpawningLocation;
 
-        protected float DeadTimer;
+        protected float DeadTimer { get; set; }
+        protected float ScatterTimer { get; set; }
 
         public GameObject WarpIn;
         public GameObject WarpOut;
@@ -33,6 +34,17 @@ namespace Assets
         public Vector2 warpInPositionVector2;
         public Vector2 warpOutPositionVector2;
 
+        public GameObject ScatterSpawns;
+
+        public float GetScatterTime()
+        {
+            return ScatterTimer;
+        }
+
+        public float GetDeadTimer()
+        {
+            return DeadTimer;
+        }
 
         // Use this for initialization
         void Start()
@@ -47,7 +59,7 @@ namespace Assets
             warpOutPositionVector2 = new Vector2(WarpOut.transform.position.x, WarpOut.transform.position.y);
 
             SpawningLocation = body.position;
-            state = new DeadState(this, DeadTimer);
+            state = new DeadState(this);
         }
 
         void FixedUpdate()

@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 212853029801118460}
   - component: {fileID: 50593988131399606}
   - component: {fileID: 114386598249712438}
+  - component: {fileID: 58998816835912552}
+  - component: {fileID: 95766431598702508}
   m_Layer: 0
   m_Name: Pinky
   m_TagString: Untagged
@@ -62,6 +64,39 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &58998816835912552
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1086681688041056}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 8
+--- !u!95 &95766431598702508
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1086681688041056}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d356881f40960ad438ab7819ce9237e8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114386598249712438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -73,6 +108,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13954f1bd4d683548859376d26358375, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerGameObject: {fileID: 0}
+  target: {x: 0, y: 0}
+  body: {fileID: 0}
+  playerBody: {fileID: 0}
+  player: {fileID: 0}
+  SpawningLocation: {x: 0, y: 0}
+  DeadTimer: 0
+  ScatterTimer: 14
+  WarpIn: {fileID: 0}
+  WarpOut: {fileID: 0}
+  warpInPositionVector2: {x: 0, y: 0}
+  warpOutPositionVector2: {x: 0, y: 0}
+  ScatterSpawns: {fileID: 0}
 --- !u!212 &212853029801118460
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114917327346444898}
   - component: {fileID: 50032451703854506}
   - component: {fileID: 95574270123164698}
+  - component: {fileID: 58365898290832010}
   m_Layer: 0
   m_Name: Blinky
   m_TagString: Untagged
@@ -63,6 +64,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!58 &58365898290832010
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1870225890867720}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 8
 --- !u!95 &95574270123164698
 Animator:
   serializedVersion: 3
@@ -92,7 +108,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7a66d7e4dbfa643b2f34773a2c9827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerGameObject: {fileID: 0}
+  target: {x: 0, y: 0}
+  body: {fileID: 0}
+  playerBody: {fileID: 0}
   player: {fileID: 0}
+  SpawningLocation: {x: 0, y: 0}
+  DeadTimer: 1
+  ScatterTimer: 10
+  WarpIn: {fileID: 0}
+  WarpOut: {fileID: 0}
+  warpInPositionVector2: {x: 0, y: 0}
+  warpOutPositionVector2: {x: 0, y: 0}
+  ScatterSpawns: {fileID: 0}
 --- !u!212 &212961316732646490
 SpriteRenderer:
   m_ObjectHideFlags: 1

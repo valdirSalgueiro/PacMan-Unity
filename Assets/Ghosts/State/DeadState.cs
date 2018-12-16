@@ -9,15 +9,15 @@ namespace Assets.Ghosts.State
         private int currentPos = 0;
         private float speed = 2f;
 
-        private float deadTimer;
+        private float timer;
 
-        public DeadState(Ghost ghost, float deadTimer)
+        public DeadState(Ghost ghost)
         {
             positions = new Vector2[3];
             positions[0] = ghost.SpawningLocation + Vector2.up * 16;
             positions[1] = ghost.SpawningLocation;
             positions[2] = ghost.SpawningLocation + Vector2.down * 16;
-            this.deadTimer = deadTimer;
+            this.timer = ghost.GetDeadTimer();
         }
 
         public void Start(Ghost ghost)
@@ -30,7 +30,7 @@ namespace Assets.Ghosts.State
             ghost.target = positions[currentPos];
             if (ghost.body.position == ghost.target)
             {
-                if (deadTimer > 0)
+                if (timer > 0)
                 {
                     if (currentPos < positions.Length - 1)
                     {
@@ -43,14 +43,14 @@ namespace Assets.Ghosts.State
                 }
                 else
                 {
-                    return new ChaseState();
+                    return new ScatterState(ghost);
                 }
             }
 
             var nextP = Vector2.MoveTowards(ghost.body.position, ghost.target, speed);
             ghost.body.MovePosition(nextP);
 
-            deadTimer -= Time.deltaTime;
+            timer -= Time.deltaTime;
 
             return null;
         }

@@ -4,7 +4,7 @@ namespace Assets.Ghosts.State
 {
     class ChaseState : IGhostState
     {
-        private float speed = 3f;
+        private float speed = 2f;
         private int strategyIndex = 0;
 
         public void Start(Ghost ghost)

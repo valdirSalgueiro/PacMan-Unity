@@ -4,12 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
 
     public Tilemap TileMap;
     public GameObject Pill;
+    public GameObject BigPill;
     public GameObject PillContainer;
 
     static int startX = 15;
@@ -21,10 +23,13 @@ public class GameManager : MonoBehaviour
     private static RoyT.AStar.Grid grid;
 
     private static List<Vector2Int> edgeTiles = new List<Vector2Int>();
+    private List<Vector2> BigPillPositions;
+    public GameObject BigPillGameObject;
 
     // Use this for initialization
     void Start()
     {
+        BigPillPositions = BigPillGameObject.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x / 16, gameobject.transform.position.y / 16)).ToList();
         // Create a new grid and let each cell have a default traversal cost of 1.0
         grid = new RoyT.AStar.Grid(startX + endX, startY + endY, 1.0f);
 
@@ -44,8 +49,17 @@ public class GameManager : MonoBehaviour
                         if (((i >= -12 && i <= -9) || (i >= -6 && i <= -4) || (i >= 3 && i <= 5) || (i >= 9 && i <= 11)) && j == 10)
                             continue;
 
-                        var pill = Instantiate(Pill, PillContainer.transform);
-                        pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
+                        if (!BigPillPositions.Contains(new Vector2(i, j)))
+                        {
+                            var pill = Instantiate(Pill, PillContainer.transform);
+                            pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
+                        }
+                        else
+                        {
+                            var pill = Instantiate(BigPill, PillContainer.transform);
+                            pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
+                            BigPillPositions.Remove(new Vector2(i, j));
+                        }
 
                         // this is to reverse facing on ghosts
                         if (

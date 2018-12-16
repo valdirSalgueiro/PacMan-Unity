@@ -11,7 +11,6 @@ namespace Assets.Ghosts.ChaseStrategies
     {
         private Vector2[] positions;
         private int currentPos = 0;
-        private Vector2Int goal;
 
         private Vector2Int tile;
 
@@ -56,10 +55,10 @@ namespace Assets.Ghosts.ChaseStrategies
 
         private void getRandomWalkableTile(Ghost ghost)
         {
-
             var warpInDist = Vector2.Distance(ghost.body.position, ghost.warpInPositionVector2);
             var warpOutDist = Vector2.Distance(ghost.body.position, ghost.warpOutPositionVector2);
             var tileDist = Vector2.Distance(ghost.body.position, tile * 16);
+            Vector2Int goal;
             if (warpInDist > 0 && warpInDist < tileDist)
             {
                 goal = Vector2Int.FloorToInt(ghost.warpInPositionVector2 / 16);
