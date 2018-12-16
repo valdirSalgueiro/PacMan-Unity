@@ -19,7 +19,7 @@ namespace Assets.Ghosts.State
         public ScatterState(Ghost ghost)
         {
             speed = 2f;
-            ScatterPositions = ghost.ScatterSpawns.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x, gameobject.transform.position.y)).ToList();
+            ScatterPositions = ghost.GetScatterSpawns().GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x, gameobject.transform.position.y)).ToList();
             ScatterPositions = ScatterPositions.Skip(1).ToList();
             this.timer = ghost.GetScatterTime();
             getNextScatter(ghost);
@@ -34,7 +34,7 @@ namespace Assets.Ghosts.State
         {
             if (positions != null)
             {
-                if (ghost.body.position == ghost.target)
+                if (ghost.GetBody().position == ghost.target)
                 {
                     if (timer > 0)
                     {
@@ -70,8 +70,8 @@ namespace Assets.Ghosts.State
 
         private void getNextScatter(Ghost ghost)
         {
-            var start = Vector2Int.FloorToInt(ghost.body.position / 16);
-            positions = GameManager.GetPath(ghost.grid, start, Vector2Int.FloorToInt(ScatterPositions[currentScatterPosition] / 16));
+            var start = Vector2Int.FloorToInt(ghost.GetBody().position / 16);
+            positions = GameManager.GetPath(ghost.gridTiles.grid, start, Vector2Int.FloorToInt(ScatterPositions[currentScatterPosition] / 16));
             currentPosition = 0;
             if (positions != null && positions.Count() > 0)
             {

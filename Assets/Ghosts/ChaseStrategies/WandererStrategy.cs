@@ -11,10 +11,15 @@ namespace Assets.Ghosts.ChaseStrategies
     {
         private Vector2Int tile;
 
+        public WandererStrategy()
+        {
+            ConsiderWarps = false;
+        }
+
         public void Start(Ghost ghost, Ghost blinky)
         {
             Debug.Log(ghost.name + " wandering");
-            tile = GameManager.GetRandomEdgeTile(Vector2Int.FloorToInt(ghost.body.position / 16));
+            tile = GameManager.GetRandomTile(ghost.gridTiles, Vector2Int.FloorToInt(ghost.GetBody().position / 16));
             chasePosition(ghost);
         }
 

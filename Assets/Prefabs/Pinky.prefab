@@ -110,11 +110,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerGameObject: {fileID: 0}
   target: {x: 0, y: 0}
-  body: {fileID: 0}
   playerBody: {fileID: 0}
   spriteRenderer: {fileID: 0}
   player: {fileID: 0}
+  TileMap: {fileID: 0}
   SpawningLocation: {x: 0, y: 0}
+  direction: {x: 0, y: 0}
   WarpIn: {fileID: 0}
   WarpOut: {fileID: 0}
   warpInPositionVector2: {x: 0, y: 0}

@@ -9,13 +9,18 @@ namespace Assets.Ghosts.ChaseStrategies
 
         protected void UpdateCommons(Ghost ghost)
         {
+            if(ghost.player.IsDead)
+            {
+                return;
+            }
+
             if (timer > 0)
             {
                 timer -= Time.deltaTime;
             }
 
-            var nextP = Vector2.MoveTowards(ghost.body.position, ghost.target, speed);
-            ghost.body.MovePosition(nextP);
+            var nextP = Vector2.MoveTowards(ghost.GetBody().position, ghost.target, speed);
+            ghost.GetBody().MovePosition(nextP);
         }
     }
 }

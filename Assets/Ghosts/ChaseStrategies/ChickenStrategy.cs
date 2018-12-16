@@ -17,7 +17,7 @@ namespace Assets.Ghosts.ChaseStrategies
 
             chasePosition(ghost);
 
-            var gameObjects = ghost.ScatterSpawns.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x, gameobject.transform.position.y));
+            var gameObjects = ghost.GetScatterSpawns().GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x, gameobject.transform.position.y));
             corner = gameObjects.Skip(2).Take(1).FirstOrDefault();
         }
 
@@ -33,7 +33,7 @@ namespace Assets.Ghosts.ChaseStrategies
 
         protected override Vector2Int GetGoal(Ghost ghost)
         {
-            var playerDist = Vector2.Distance(ghost.body.position, ghost.playerBody.position);
+            var playerDist = Vector2.Distance(ghost.GetBody().position, ghost.playerBody.position);
             Retarget = true;
             if (playerDist < 16 * 8)
             {

@@ -27,9 +27,9 @@ namespace Assets.Ghosts.ChaseStrategies
             Vector2Int goal = Vector2Int.zero;
             do
             {
-                var start = Vector2Int.FloorToInt(ghost.body.position / 16);
+                var start = Vector2Int.FloorToInt(ghost.GetBody().position / 16);
                 goal = Vector2Int.FloorToInt(ghost.playerBody.position / 16 + ghost.player.direction * lookAhead);
-                positions = GameManager.GetPath(ghost.grid, start, goal);
+                positions = GameManager.GetPath(ghost.gridTiles.grid, start, goal);
                 lookAhead -= 1;
             }
             while (positions == null || positions.Count() == 0);

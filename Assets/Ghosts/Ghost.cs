@@ -13,9 +13,7 @@ namespace Assets
 {
     public class Ghost : MonoBehaviour
     {
-        public GameObject playerGameObject;
         public Vector2 target;
-        public Rigidbody2D body;
         public Rigidbody2D playerBody;
         public SpriteRenderer spriteRenderer;
         public Player player;
@@ -31,17 +29,34 @@ namespace Assets
         protected float DeadTimer { get; set; }
         protected float ScatterTimer { get; set; }
 
-        public GameObject WarpIn;
-        public GameObject WarpOut;
+        private GameObject WarpIn;
+        private GameObject WarpOut;
 
         public List<IChaseStrategy> chaseStrategies = new List<IChaseStrategy>();
 
         public Vector2 warpInPositionVector2;
         public Vector2 warpOutPositionVector2;
 
-        public GameObject ScatterSpawns;
+        private GameObject ScatterSpawns;
 
-        public RoyT.AStar.Grid grid;
+        public GridTiles gridTiles;
+
+        private Rigidbody2D body;
+
+        public GameObject GetScatterSpawns()
+        {
+            return ScatterSpawns;
+        }
+
+        public void SetScatterSpawns(GameObject ScatterSpawns)
+        {
+            this.ScatterSpawns = ScatterSpawns;
+        }
+
+        public Rigidbody2D GetBody()
+        {
+            return body;
+        }
 
         public float GetScatterTime()
         {
@@ -63,9 +78,13 @@ namespace Assets
         }
 
         // Use this for initialization
-        void Start()
+        protected virtual void Start()
         {
-            grid = GameManager.InitGrid(TileMap, true);
+            var playerGameObject = GameObject.FindGameObjectWithTag("Player");
+            WarpIn = GameObject.Find("WarpIn");
+            WarpOut = GameObject.Find("WarpOut");
+
+            gridTiles = GameManager.InitGrid(TileMap, true);
 
             body = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
@@ -147,7 +166,7 @@ namespace Assets
                 }
                 else if (!(state is GoingHomeState))
                 {
-                    Debug.Log("dead");
+                    player.IsDead = true;
                 }
             }
         }

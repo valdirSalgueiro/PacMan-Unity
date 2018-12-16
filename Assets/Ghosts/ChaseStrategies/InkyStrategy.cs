@@ -31,11 +31,11 @@ namespace Assets.Ghosts.ChaseStrategies
         protected override Vector2Int GetGoal(Ghost ghost)
         {
             Vector2 pacmanPosition = ghost.playerBody.position / 16;
-            Vector2 blinkyPosition = blinky.body.position / 16;
+            Vector2 blinkyPosition = blinky.GetBody().position / 16;
             Vector2 blinkyToPacman = pacmanPosition - blinkyPosition;
 
             Vector2 target = pacmanPosition + blinkyToPacman;
-            Vector2Int nearestTile = GameManager.getNearestNonWallTile(target);
+            Vector2Int nearestTile = GameManager.getNearestWallkableTile(ghost.gridTiles, target);
 
             return nearestTile;
         }

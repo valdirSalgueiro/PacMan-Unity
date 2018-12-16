@@ -18,11 +18,14 @@ public class Player : MonoBehaviour
     private Animator animator;
     private Vector2 lastPosition;
 
-    private RoyT.AStar.Grid grid;
+    private GridTiles grid;
+
+    public bool IsDead;    
 
     // Use this for initialization
     void Start()
     {
+        IsDead = false;
         grid = GameManager.InitGrid(TileMap, false);
 
         body = GetComponent<Rigidbody2D>();
@@ -36,6 +39,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (IsDead)
+        {
+            return;
+        }
+
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             desiredDirection = Vector2Int.left;

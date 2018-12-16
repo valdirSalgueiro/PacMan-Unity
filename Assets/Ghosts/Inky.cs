@@ -11,4 +11,10 @@ public class Inky : Ghost
 
         chaseStrategies.Add(new InkyStrategy());
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        SetScatterSpawns(GameObject.Find("InkyScatter"));
+    }
 }

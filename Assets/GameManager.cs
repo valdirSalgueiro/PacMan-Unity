@@ -15,28 +15,58 @@ public class GameManager : MonoBehaviour
     public GameObject BigPill;
     public GameObject PillContainer;
 
-    static int startX = 16;
+    static int startX = 15;
     static int startY = 17;
 
-    static int endX = 16;
+    static int endX = 15;
     static int endY = 14;
 
-    private static List<Vector2Int> edgeTiles = new List<Vector2Int>();
-    private static List<Vector2Int> nonWallTiles = new List<Vector2Int>();
+
     private List<Vector2> BigPillPositions;
     public GameObject BigPillGameObject;
 
     // Use this for initialization
     void Start()
     {
-
-    }
-
-    static public RoyT.AStar.Grid InitGrid(Tilemap TileMap, bool isGhost)
-    {
-        RoyT.AStar.Grid grid = new RoyT.AStar.Grid(startX + endX, startY + endY, 1.0f);
+        BigPillPositions = BigPillGameObject.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x / 16, gameobject.transform.position.y / 16)).ToList();
 
         for (int i = -startX + 1; i < endX - 1; i++)
+        {
+            for (int j = -startY; j < endY; j++)
+            {
+                // do not spawn in walls or ghost area
+                if (!GameManager.isWallOrGhostArea(TileMap, new Vector2Int(i, j)))
+                {
+                    // do not spawn between walls
+                    if (((i >= -14 && i <= -9) || (i >= 9 && i <= 13)) && ((j >= 0 && j <= 3) || (j >= -6 && j <= -3)))
+                        continue;
+
+                    if (((i >= -12 && i <= -9) || (i >= -6 && i <= -4) || (i >= 3 && i <= 5) || (i >= 9 && i <= 11)) && j == 10)
+                        continue;
+
+                    if (!BigPillPositions.Contains(new Vector2(i, j)))
+                    {
+                        var pill = Instantiate(Pill, PillContainer.transform);
+                        pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
+                    }
+                    else
+                    {
+                        var pill = Instantiate(BigPill, PillContainer.transform);
+                        pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
+                        BigPillPositions.Remove(new Vector2(i, j));
+                    }
+                }
+            }
+        }
+    }
+
+    static public GridTiles InitGrid(Tilemap TileMap, bool isGhost)
+    {
+        GridTiles tiles = new GridTiles();
+        tiles.walkableTiles = new List<Vector2Int>();
+        RoyT.AStar.Grid grid = new RoyT.AStar.Grid(startX + endX, startY + endY, 1.0f);
+
+        for (int i = -startX; i < endX; i++)
         {
             for (int j = -startY; j < endY; j++)
             {
@@ -45,6 +75,10 @@ public class GameManager : MonoBehaviour
                     if (GameManager.isWall(TileMap, new Vector2Int(i, j)))
                     {
                         grid.BlockCell(new Position(i + startX, j + startY));
+                    }
+                    else if(!GameManager.isGhostArea(new Vector2Int(i, j)))
+                    {
+                        tiles.walkableTiles.Add(new Vector2Int(i, j));
                     }
                 }
                 else
@@ -56,7 +90,8 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        return grid;
+        tiles.grid = grid;
+        return tiles;
     }
 
     static public void BlockCell(Grid grid, Vector2Int position)
@@ -69,11 +104,11 @@ public class GameManager : MonoBehaviour
         grid.UnblockCell(new Position(position.x + startX, position.y + startY));
     }
 
-    public static Vector2Int getNearestNonWallTile(Vector2 target)
+    public static Vector2Int getNearestWallkableTile(GridTiles tiles, Vector2 target)
     {
         float min = 1000;
         Vector2Int result = Vector2Int.zero;
-        foreach (var tile in nonWallTiles)
+        foreach (var tile in tiles.walkableTiles)
         {
             var dist = Vector2.Distance(tile, target);
             if (dist < min)
@@ -110,13 +145,13 @@ public class GameManager : MonoBehaviour
         return new Vector2((position.X - startX) * 16, (position.Y - startY) * 16);
     }
 
-    public static Vector2Int GetRandomEdgeTile(Vector2Int position)
+    public static Vector2Int GetRandomTile(GridTiles tiles, Vector2Int position)
     {
         Vector2Int result = Vector2Int.zero;
         do
         {
-            int index = Random.Range(0, edgeTiles.Count);
-            result = edgeTiles[index];
+            int index = Random.Range(0, tiles.walkableTiles.Count);
+            result = tiles.walkableTiles[index];
         }
         while (result == position);
         return result;

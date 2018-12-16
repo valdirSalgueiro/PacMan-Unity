@@ -29,7 +29,7 @@ namespace Assets.Ghosts.State
         {
             if (positions != null)
             {
-                if (ghost.body.position == ghost.target)
+                if (ghost.GetBody().position == ghost.target)
                 {
 
                     if (currentPosition < positions.Length - 1)
@@ -51,8 +51,8 @@ namespace Assets.Ghosts.State
 
         private void getHomePath(Ghost ghost)
         {
-            var start = Vector2Int.FloorToInt(ghost.body.position / 16);
-            positions = GameManager.GetPath(ghost.grid, start, Vector2Int.FloorToInt(ghost.SpawningLocation / 16));
+            var start = Vector2Int.FloorToInt(ghost.GetBody().position / 16);
+            positions = GameManager.GetPath(ghost.gridTiles.grid, start, Vector2Int.FloorToInt(ghost.SpawningLocation / 16));
             currentPosition = 0;
             if (positions != null && positions.Count() > 0)
             {

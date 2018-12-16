@@ -11,4 +11,10 @@ public class Clyde : Ghost
 
         chaseStrategies.Add(new ChickenStrategy());
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        SetScatterSpawns(GameObject.Find("ClydeScatter"));
+    }
 }

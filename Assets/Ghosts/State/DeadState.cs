@@ -30,7 +30,7 @@ namespace Assets.Ghosts.State
         public IGhostState Update(Ghost ghost)
         {
             ghost.target = positions[currentPos];
-            if (ghost.body.position == ghost.target)
+            if (ghost.GetBody().position == ghost.target)
             {
                 if (timer > 0)
                 {

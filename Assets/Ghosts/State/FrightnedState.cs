@@ -54,7 +54,7 @@ namespace Assets.Ghosts.State
 
             if (positions != null)
             {
-                if (ghost.body.position == ghost.target)
+                if (ghost.GetBody().position == ghost.target)
                 {
                     if (timer > 0)
                     {
@@ -82,8 +82,8 @@ namespace Assets.Ghosts.State
 
         private void getNextRandomPath(Ghost ghost)
         {
-            var start = Vector2Int.FloorToInt(ghost.body.position / 16);
-            positions = GameManager.GetPath(ghost.grid, start, GameManager.GetRandomEdgeTile(start));
+            var start = Vector2Int.FloorToInt(ghost.GetBody().position / 16);
+            positions = GameManager.GetPath(ghost.gridTiles.grid, start, GameManager.GetRandomTile(ghost.gridTiles, start));
             currentPosition = 0;
             if (positions != null && positions.Count() > 0)
             {
