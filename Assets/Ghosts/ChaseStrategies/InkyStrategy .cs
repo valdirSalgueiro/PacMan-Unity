@@ -56,6 +56,10 @@ namespace Assets.Ghosts.ChaseStrategies
                     }
                 }
             }
+            else
+            {
+                ambushPlayer(ghost);
+            }
             return false;
         }
 

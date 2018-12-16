@@ -9,6 +9,10 @@ namespace Assets.Ghosts.State
         private float timer = 20f;
         private Ghost blinky;
 
+        public void Exit(Ghost ghost)
+        {
+        }
+
         public void Start(Ghost ghost)
         {
             Debug.Log(ghost.name + " chase state");

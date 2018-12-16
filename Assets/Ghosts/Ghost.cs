@@ -77,6 +77,7 @@ namespace Assets
             var nextState = state.Update(this);
             if (nextState != null)
             {
+                state.Exit(this);
                 state = nextState;
                 state.Start(this);
             }
@@ -133,6 +134,7 @@ namespace Assets
             {
                 if(state is FrightnedState)
                 {
+                    state.Exit(this);
                     state = new GoingHomeState(this);
                     state.Start(this);
                 }

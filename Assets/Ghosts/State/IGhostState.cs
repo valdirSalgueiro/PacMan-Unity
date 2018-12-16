@@ -9,6 +9,7 @@ namespace Assets.Ghosts
     public interface IGhostState
     {
         void Start(Ghost ghost);
+        void Exit(Ghost ghost);
         IGhostState Update(Ghost ghost);
     }
 }

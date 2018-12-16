@@ -15,6 +15,10 @@ namespace Assets.Ghosts.State
 
         private float timer;
 
+        public void Exit(Ghost ghost)
+        {
+        }
+
         public ScatterState(Ghost ghost)
         {
             ScatterPositions = ghost.ScatterSpawns.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x, gameobject.transform.position.y)).ToList();

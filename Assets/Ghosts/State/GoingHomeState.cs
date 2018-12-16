@@ -15,6 +15,10 @@ namespace Assets.Ghosts.State
         {
         }
 
+        public void Exit(Ghost ghost)
+        {
+        }
+
         public void Start(Ghost ghost)
         {
             Debug.Log(ghost.name + " going home state ");

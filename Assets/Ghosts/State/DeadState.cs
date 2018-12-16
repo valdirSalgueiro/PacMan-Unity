@@ -11,6 +11,10 @@ namespace Assets.Ghosts.State
 
         private float timer;
 
+        public void Exit(Ghost ghost)
+        {
+        }
+
         public DeadState(Ghost ghost)
         {
             positions = new Vector2[3];

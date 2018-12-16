@@ -17,6 +17,11 @@ namespace Assets.Ghosts.State
         private Shader shaderGUItext;
         private Shader shaderSpritesDefault;
 
+        public void Exit(Ghost ghost)
+        {
+            ghost.spriteRenderer.material.shader = shaderSpritesDefault;
+        }
+
         public FrightnedState(Ghost ghost)
         {
             shaderGUItext = Shader.Find("GUI/Text Shader");
@@ -64,7 +69,6 @@ namespace Assets.Ghosts.State
                     }
                     else
                     {
-                        ghost.spriteRenderer.material.shader = shaderSpritesDefault;
                         return new ChaseState();
                     }
                 }
