@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212839367946932732}
   - component: {fileID: 58793666339254764}
   - component: {fileID: 114705241332436692}
+  - component: {fileID: 95411737872241640}
   m_Layer: 0
   m_Name: BigPill
   m_TagString: Untagged
@@ -36,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1905659539324614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 114.29337, y: -107.81459, z: 0}
+  m_LocalPosition: {x: -381.98648, y: -319.59076, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -57,6 +58,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 8
+--- !u!95 &95411737872241640
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1905659539324614}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c0a8387e2a87d294381bb9b3fdc29f23, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114705241332436692
 MonoBehaviour:
   m_ObjectHideFlags: 1
