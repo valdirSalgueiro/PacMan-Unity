@@ -32,6 +32,11 @@ namespace Assets.Ghosts.State
 
         public IGhostState Update(Ghost ghost)
         {
+            if (PathFindUtils.WarpGhost(ghost))
+            {
+                getNextScatter(ghost);
+            }
+
             if (positions != null)
             {
                 if (ghost.GetBody().position == ghost.target)
@@ -70,13 +75,7 @@ namespace Assets.Ghosts.State
 
         private void getNextScatter(Ghost ghost)
         {
-            var start = Vector2Int.FloorToInt(ghost.GetBody().position / 16);
-            positions = GameManager.GetPath(ghost.gridTiles.grid, start, Vector2Int.FloorToInt(ScatterPositions[currentScatterPosition] / 16));
-            currentPosition = 0;
-            if (positions != null && positions.Count() > 0)
-            {
-                ghost.target = positions[currentPosition];
-            }
+            PathFindUtils.Navigate(ghost, true, Vector2Int.FloorToInt(ScatterPositions[currentScatterPosition] / 16), ref positions, ref currentPosition);
         }
     }
 }

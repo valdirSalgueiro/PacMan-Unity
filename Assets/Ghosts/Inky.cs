@@ -7,7 +7,7 @@ public class Inky : Ghost
     public Inky()
     {
         DeadTimer = 3f;
-        ScatterTimer = 24;
+        ScatterTimer = 12;
 
         chaseStrategies.Add(new InkyStrategy());
     }

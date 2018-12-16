@@ -7,7 +7,7 @@ public class Blinky : Ghost
     public Blinky()
     {
         DeadTimer = 1;
-        ScatterTimer = 20;
+        ScatterTimer = 10;
         chaseStrategies.Add(new FollowStrategy());
     }
     protected override void Start()

@@ -52,6 +52,11 @@ namespace Assets.Ghosts.State
                 }
             }
 
+            if (PathFindUtils.WarpGhost(ghost))
+            {
+                getNextRandomPath(ghost);
+            }
+
             if (positions != null)
             {
                 if (ghost.GetBody().position == ghost.target)
@@ -83,12 +88,7 @@ namespace Assets.Ghosts.State
         private void getNextRandomPath(Ghost ghost)
         {
             var start = Vector2Int.FloorToInt(ghost.GetBody().position / 16);
-            positions = GameManager.GetPath(ghost.gridTiles.grid, start, GameManager.GetRandomTile(ghost.gridTiles, start));
-            currentPosition = 0;
-            if (positions != null && positions.Count() > 0)
-            {
-                ghost.target = positions[currentPosition];
-            }
+            PathFindUtils.Navigate(ghost, true, GameManager.GetRandomTile(ghost.gridTiles, start), ref positions, ref currentPosition);
         }
     }
 }

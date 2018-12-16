@@ -7,7 +7,7 @@ public class Clyde : Ghost
     public Clyde()
     {
         DeadTimer = 2f;
-        ScatterTimer = 32f;
+        ScatterTimer = 16f;
 
         chaseStrategies.Add(new ChickenStrategy());
     }
