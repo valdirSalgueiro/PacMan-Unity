@@ -16,6 +16,7 @@ namespace Assets
         public Vector2 target;
         public Rigidbody2D body;
         public Rigidbody2D playerBody;
+        public SpriteRenderer spriteRenderer;
         public Player player;
 
         private Animator animator;
@@ -46,6 +47,15 @@ namespace Assets
             return DeadTimer;
         }
 
+        public void SetFrightened()
+        {
+            if (!(state is DeadState || state is DeadState))
+            {
+                state = new FrightnedState(this);
+                state.Start(this);
+            }
+        }
+
         // Use this for initialization
         void Start()
         {
@@ -53,7 +63,7 @@ namespace Assets
             animator = GetComponent<Animator>();
             playerBody = playerGameObject.GetComponent<Rigidbody2D>();
             player = playerGameObject.GetComponent<Player>();
-
+            spriteRenderer = GetComponent<SpriteRenderer>();
 
             warpInPositionVector2 = new Vector2(WarpIn.transform.position.x, WarpIn.transform.position.y);
             warpOutPositionVector2 = new Vector2(WarpOut.transform.position.x, WarpOut.transform.position.y);
@@ -71,22 +81,49 @@ namespace Assets
                 state.Start(this);
             }
 
-            var direction = (target - body.position).normalized;
-            if (direction == Vector2Int.right)
+            if (state is FrightnedState)
             {
-                animator.SetTrigger("right");
+                animator.SetTrigger("frightned");
             }
-            else if (direction == Vector2Int.down)
+            else if (state is GoingHomeState)
             {
-                animator.SetTrigger("down");
-            }
-            else if (direction == Vector2Int.up)
-            {
-                animator.SetTrigger("up");
+                var direction = (target - body.position).normalized;
+                if (direction == Vector2Int.right)
+                {
+                    animator.SetTrigger("deadright");
+                }
+                else if (direction == Vector2Int.down)
+                {
+                    animator.SetTrigger("deaddown");
+                }
+                else if (direction == Vector2Int.up)
+                {
+                    animator.SetTrigger("deadup");
+                }
+                else
+                {
+                    animator.SetTrigger("deadleft");
+                }
             }
             else
             {
-                animator.SetTrigger("left");
+                var direction = (target - body.position).normalized;
+                if (direction == Vector2Int.right)
+                {
+                    animator.SetTrigger("right");
+                }
+                else if (direction == Vector2Int.down)
+                {
+                    animator.SetTrigger("down");
+                }
+                else if (direction == Vector2Int.up)
+                {
+                    animator.SetTrigger("up");
+                }
+                else
+                {
+                    animator.SetTrigger("left");
+                }
             }
         }
 
@@ -94,8 +131,15 @@ namespace Assets
         {
             if (collision.CompareTag("Player"))
             {
-                //Destroy(gameObject);
-                // incrementa score
+                if(state is FrightnedState)
+                {
+                    state = new GoingHomeState(this);
+                    state.Start(this);
+                }
+                else if (!(state is GoingHomeState))
+                {
+                    Debug.Log("dead");
+                }
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Assets;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,13 @@ public class BigPill : MonoBehaviour {
         if (collision.CompareTag("Player"))
         {
             Destroy(gameObject);
-            // incrementa score
+            var ghostsGameObjects = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach (GameObject ghostsGameObject in ghostsGameObjects)
+            {
+                var ghost = ghostsGameObject.GetComponent<Ghost>();
+                ghost.SetFrightened();
+            }
         }
     }
 }

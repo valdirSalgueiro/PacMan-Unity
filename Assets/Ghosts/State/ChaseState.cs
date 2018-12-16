@@ -6,6 +6,7 @@ namespace Assets.Ghosts.State
     {
         private float speed = 2f;
         private int strategyIndex = 0;
+        private float timer = 20f;
 
         public void Start(Ghost ghost)
         {
@@ -20,7 +21,7 @@ namespace Assets.Ghosts.State
                 //cycle through strategies
                 if (strategyIndex < ghost.chaseStrategies.Count - 1)
                 {
-                    strategyIndex++;                    
+                    strategyIndex++;
                 }
                 else
                 {
@@ -28,6 +29,12 @@ namespace Assets.Ghosts.State
                 }
                 ghost.chaseStrategies[strategyIndex].Start(ghost);
             }
+
+            if (timer <= 0)
+            {
+                return new ScatterState(ghost);
+            }
+            timer -= Time.deltaTime;
 
             var nextP = Vector2.MoveTowards(ghost.body.position, ghost.target, speed);
             ghost.body.MovePosition(nextP);
