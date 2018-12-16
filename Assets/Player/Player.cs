@@ -18,9 +18,13 @@ public class Player : MonoBehaviour
     private Animator animator;
     private Vector2 lastPosition;
 
+    private RoyT.AStar.Grid grid;
+
     // Use this for initialization
     void Start()
     {
+        grid = GameManager.InitGrid(TileMap, false);
+
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 

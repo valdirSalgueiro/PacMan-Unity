@@ -2,16 +2,15 @@
 using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using Assets.Ghosts.ChaseStrategies;
 
 namespace Assets.Ghosts.State
 {
-    class FrightnedState : IGhostState
+    class FrightnedState : StateCommons, IGhostState
     {
         private Vector2[] positions;
         private int currentPosition = 0;
-        private float speed = 1f;
 
-        private float timer = 8f;
 
         int flashCount = 0;
         private Shader shaderGUItext;
@@ -24,6 +23,8 @@ namespace Assets.Ghosts.State
 
         public FrightnedState(Ghost ghost)
         {
+            speed = 1f;
+            timer = 8f;
             shaderGUItext = Shader.Find("GUI/Text Shader");
             shaderSpritesDefault = Shader.Find("Sprites/Default");
         }
@@ -74,10 +75,7 @@ namespace Assets.Ghosts.State
                 }
             }
 
-            var nextP = Vector2.MoveTowards(ghost.body.position, ghost.target, speed);
-            ghost.body.MovePosition(nextP);
-
-            timer -= Time.deltaTime;
+            base.UpdateCommons(ghost);
 
             return null;
         }
@@ -85,7 +83,7 @@ namespace Assets.Ghosts.State
         private void getNextRandomPath(Ghost ghost)
         {
             var start = Vector2Int.FloorToInt(ghost.body.position / 16);
-            positions = GameManager.GetPath(start, GameManager.GetRandomEdgeTile(start));
+            positions = GameManager.GetPath(ghost.grid, start, GameManager.GetRandomEdgeTile(start));
             currentPosition = 0;
             if (positions != null && positions.Count() > 0)
             {

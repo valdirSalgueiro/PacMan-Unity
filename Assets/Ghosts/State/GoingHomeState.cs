@@ -1,18 +1,18 @@
-﻿using RoyT.AStar;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
-using System.Collections.Generic;
+using Assets.Ghosts.ChaseStrategies;
 
 namespace Assets.Ghosts.State
 {
-    class GoingHomeState : IGhostState
+    class GoingHomeState : StateCommons, IGhostState
     {
         private Vector2[] positions;
         private int currentPosition = 0;
-        private float speed = 2f;
 
         public GoingHomeState(Ghost ghost)
         {
+            timer = 0;
+            speed = 2f;
         }
 
         public void Exit(Ghost ghost)
@@ -44,8 +44,7 @@ namespace Assets.Ghosts.State
                 }
             }
 
-            var nextP = Vector2.MoveTowards(ghost.body.position, ghost.target, speed);
-            ghost.body.MovePosition(nextP);
+            base.UpdateCommons(ghost);
 
             return null;
         }
@@ -53,7 +52,7 @@ namespace Assets.Ghosts.State
         private void getHomePath(Ghost ghost)
         {
             var start = Vector2Int.FloorToInt(ghost.body.position / 16);
-            positions = GameManager.GetPath(start, Vector2Int.FloorToInt(ghost.SpawningLocation / 16));
+            positions = GameManager.GetPath(ghost.grid, start, Vector2Int.FloorToInt(ghost.SpawningLocation / 16));
             currentPosition = 0;
             if (positions != null && positions.Count() > 0)
             {

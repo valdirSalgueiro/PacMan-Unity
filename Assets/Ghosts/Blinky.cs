@@ -7,6 +7,6 @@ public class Blinky : Ghost
     {
         DeadTimer = 1;
         ScatterTimer = 20;
-        chaseStrategies.Add(new FollowStrategy());
+        chaseStrategies.Add(new ChickenStrategy());
     }
 }

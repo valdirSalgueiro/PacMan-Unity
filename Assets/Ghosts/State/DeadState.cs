@@ -1,15 +1,12 @@
-﻿using RoyT.AStar;
+﻿using Assets.Ghosts.ChaseStrategies;
 using UnityEngine;
 
 namespace Assets.Ghosts.State
 {
-    class DeadState : IGhostState
+    class DeadState : StateCommons, IGhostState
     {
         private Vector2[] positions;
         private int currentPos = 0;
-        private float speed = 2f;
-
-        private float timer;
 
         public void Exit(Ghost ghost)
         {
@@ -17,6 +14,7 @@ namespace Assets.Ghosts.State
 
         public DeadState(Ghost ghost)
         {
+            speed = 2f;
             positions = new Vector2[3];
             positions[0] = ghost.SpawningLocation + Vector2.up * 16;
             positions[1] = ghost.SpawningLocation;
@@ -47,14 +45,12 @@ namespace Assets.Ghosts.State
                 }
                 else
                 {
-                    return new ScatterState(ghost);
+                    //return new ScatterState(ghost);
+                    return new ChaseState();
                 }
             }
 
-            var nextP = Vector2.MoveTowards(ghost.body.position, ghost.target, speed);
-            ghost.body.MovePosition(nextP);
-
-            timer -= Time.deltaTime;
+            base.UpdateCommons(ghost);
 
             return null;
         }

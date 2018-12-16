@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
+using Grid = RoyT.AStar.Grid;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,13 +15,11 @@ public class GameManager : MonoBehaviour
     public GameObject BigPill;
     public GameObject PillContainer;
 
-    static int startX = 15;
+    static int startX = 16;
     static int startY = 17;
 
-    static int endX = 15;
+    static int endX = 16;
     static int endY = 14;
-
-    private static RoyT.AStar.Grid grid;
 
     private static List<Vector2Int> edgeTiles = new List<Vector2Int>();
     private static List<Vector2Int> nonWallTiles = new List<Vector2Int>();
@@ -30,55 +29,44 @@ public class GameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        BigPillPositions = BigPillGameObject.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x / 16, gameobject.transform.position.y / 16)).ToList();
-        // Create a new grid and let each cell have a default traversal cost of 1.0
-        grid = new RoyT.AStar.Grid(startX + endX, startY + endY, 1.0f);
+
+    }
+
+    static public RoyT.AStar.Grid InitGrid(Tilemap TileMap, bool isGhost)
+    {
+        RoyT.AStar.Grid grid = new RoyT.AStar.Grid(startX + endX, startY + endY, 1.0f);
 
         for (int i = -startX + 1; i < endX - 1; i++)
         {
             for (int j = -startY; j < endY; j++)
             {
-                // do not spawn in walls or ghost area
-                if (!GameManager.isWall(TileMap, new Vector2Int(i, j)))
+                if (isGhost)
                 {
-                    if (!GameManager.isGhostArea(new Vector2Int(i, j)))
+                    if (GameManager.isWall(TileMap, new Vector2Int(i, j)))
                     {
-                        // do not spawn between walls
-                        if (((i >= -14 && i <= -9) || (i >= 9 && i <= 13)) && ((j >= 0 && j <= 3) || (j >= -6 && j <= -3)))
-                            continue;
-
-                        if (((i >= -12 && i <= -9) || (i >= -6 && i <= -4) || (i >= 3 && i <= 5) || (i >= 9 && i <= 11)) && j == 10)
-                            continue;
-
-                        if (!BigPillPositions.Contains(new Vector2(i, j)))
-                        {
-                            var pill = Instantiate(Pill, PillContainer.transform);
-                            pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
-                        }
-                        else
-                        {
-                            var pill = Instantiate(BigPill, PillContainer.transform);
-                            pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
-                            BigPillPositions.Remove(new Vector2(i, j));
-                        }
-
-                        // this is to reverse facing on ghosts
-                        if (
-                            (GameManager.isWall(TileMap, new Vector2Int(i, j - 1)) || (GameManager.isWall(TileMap, new Vector2Int(i, j + 1))))
-                            && (GameManager.isWall(TileMap, new Vector2Int(i + 1, j)) && GameManager.isWall(TileMap, new Vector2Int(i - 1, j + 1))))
-                        {
-                            edgeTiles.Add(new Vector2Int(i, j));
-                        }
-
-                        nonWallTiles.Add(new Vector2Int(i, j));
+                        grid.BlockCell(new Position(i + startX, j + startY));
                     }
                 }
                 else
                 {
-                    grid.BlockCell(new Position(i + startX, j + startY));
+                    if (GameManager.isWallOrGhostArea(TileMap, new Vector2Int(i, j)))
+                    {
+                        grid.BlockCell(new Position(i + startX, j + startY));
+                    }
                 }
             }
         }
+        return grid;
+    }
+
+    static public void BlockCell(Grid grid, Vector2Int position)
+    {
+        grid.BlockCell(new Position(position.x + startX, position.y + startY));
+    }
+
+    static public void UnblockCell(Grid grid, Vector2Int position)
+    {
+        grid.UnblockCell(new Position(position.x + startX, position.y + startY));
     }
 
     public static Vector2Int getNearestNonWallTile(Vector2 target)
@@ -89,7 +77,7 @@ public class GameManager : MonoBehaviour
         {
             var dist = Vector2.Distance(tile, target);
             if (dist < min)
-            { 
+            {
                 //if its the current closest to target
                 min = dist;
                 result = tile;
@@ -99,7 +87,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public static Vector2[] GetPath(Vector2Int posStart, Vector2Int posEnd)
+    public static Vector2[] GetPath(RoyT.AStar.Grid grid, Vector2Int posStart, Vector2Int posEnd)
     {
         if (posEnd.x + startX >= 0 && posEnd.x + startX <= startX + endX && posEnd.y + startY >= 0 && posEnd.y + startY <= startY + endY)
         {
@@ -120,11 +108,6 @@ public class GameManager : MonoBehaviour
     public static Vector2 ConvertPosition(Position position)
     {
         return new Vector2((position.X - startX) * 16, (position.Y - startY) * 16);
-    }
-
-    public static bool isEdgeTile(Vector2Int position)
-    {
-        return edgeTiles.Contains(position);
     }
 
     public static Vector2Int GetRandomEdgeTile(Vector2Int position)

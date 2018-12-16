@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Assets
 {
@@ -18,11 +19,14 @@ namespace Assets
         public Rigidbody2D playerBody;
         public SpriteRenderer spriteRenderer;
         public Player player;
+        public Tilemap TileMap;
+        public Vector2 SpawningLocation;
+
+        public Vector2Int direction;
 
         private Animator animator;
 
         protected IGhostState state;
-        public Vector2 SpawningLocation;
 
         protected float DeadTimer { get; set; }
         protected float ScatterTimer { get; set; }
@@ -36,6 +40,8 @@ namespace Assets
         public Vector2 warpOutPositionVector2;
 
         public GameObject ScatterSpawns;
+
+        public RoyT.AStar.Grid grid;
 
         public float GetScatterTime()
         {
@@ -59,6 +65,8 @@ namespace Assets
         // Use this for initialization
         void Start()
         {
+            grid = GameManager.InitGrid(TileMap, true);
+
             body = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             playerBody = playerGameObject.GetComponent<Rigidbody2D>();
@@ -82,13 +90,13 @@ namespace Assets
                 state.Start(this);
             }
 
+            direction = Vector2Int.FloorToInt((target - body.position).normalized);
             if (state is FrightnedState)
             {
                 animator.SetTrigger("frightned");
             }
             else if (state is GoingHomeState)
             {
-                var direction = (target - body.position).normalized;
                 if (direction == Vector2Int.right)
                 {
                     animator.SetTrigger("deadright");
@@ -108,7 +116,6 @@ namespace Assets
             }
             else
             {
-                var direction = (target - body.position).normalized;
                 if (direction == Vector2Int.right)
                 {
                     animator.SetTrigger("right");

@@ -1,19 +1,16 @@
-﻿using RoyT.AStar;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Linq;
 using System.Collections.Generic;
+using Assets.Ghosts.ChaseStrategies;
 
 namespace Assets.Ghosts.State
 {
-    class ScatterState : IGhostState
+    class ScatterState : StateCommons, IGhostState
     {
         private Vector2[] positions;
         private List<Vector2> ScatterPositions;
         private int currentPosition = 0;
         private int currentScatterPosition = 0;
-        private float speed = 2f;
-
-        private float timer;
 
         public void Exit(Ghost ghost)
         {
@@ -21,6 +18,7 @@ namespace Assets.Ghosts.State
 
         public ScatterState(Ghost ghost)
         {
+            speed = 2f;
             ScatterPositions = ghost.ScatterSpawns.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x, gameobject.transform.position.y)).ToList();
             ScatterPositions = ScatterPositions.Skip(1).ToList();
             this.timer = ghost.GetScatterTime();
@@ -65,10 +63,7 @@ namespace Assets.Ghosts.State
                 }
             }
 
-            var nextP = Vector2.MoveTowards(ghost.body.position, ghost.target, speed);
-            ghost.body.MovePosition(nextP);
-
-            timer -= Time.deltaTime;
+            base.UpdateCommons(ghost);
 
             return null;
         }
@@ -76,7 +71,7 @@ namespace Assets.Ghosts.State
         private void getNextScatter(Ghost ghost)
         {
             var start = Vector2Int.FloorToInt(ghost.body.position / 16);
-            positions = GameManager.GetPath(start, Vector2Int.FloorToInt(ScatterPositions[currentScatterPosition] / 16));
+            positions = GameManager.GetPath(ghost.grid, start, Vector2Int.FloorToInt(ScatterPositions[currentScatterPosition] / 16));
             currentPosition = 0;
             if (positions != null && positions.Count() > 0)
             {

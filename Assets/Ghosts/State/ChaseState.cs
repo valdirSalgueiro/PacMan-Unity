@@ -1,12 +1,11 @@
-﻿using UnityEngine;
+﻿using Assets.Ghosts.ChaseStrategies;
+using UnityEngine;
 
 namespace Assets.Ghosts.State
 {
-    class ChaseState : IGhostState
+    class ChaseState : StateCommons, IGhostState
     {
-        private float speed = 2f;
         private int strategyIndex = 0;
-        private float timer = 20f;
         private Ghost blinky;
 
         public void Exit(Ghost ghost)
@@ -15,6 +14,9 @@ namespace Assets.Ghosts.State
 
         public void Start(Ghost ghost)
         {
+            speed = 2f;
+            timer = 20f;
+
             Debug.Log(ghost.name + " chase state");
             blinky = GameObject.FindObjectOfType<Blinky>();
             ghost.chaseStrategies[strategyIndex].Start(ghost, blinky);
@@ -40,10 +42,8 @@ namespace Assets.Ghosts.State
             {
                 //return new ScatterState(ghost);
             }
-            timer -= Time.deltaTime;
 
-            var nextP = Vector2.MoveTowards(ghost.body.position, ghost.target, speed);
-            ghost.body.MovePosition(nextP);
+            base.UpdateCommons(ghost);
 
             return null;
         }
