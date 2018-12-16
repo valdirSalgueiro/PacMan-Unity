@@ -40,7 +40,7 @@ namespace Assets.Ghosts.State
 
             if (timer <= 0)
             {
-                //return new ScatterState(ghost);
+                return new ScatterState(ghost);
             }
 
             base.UpdateCommons(ghost);

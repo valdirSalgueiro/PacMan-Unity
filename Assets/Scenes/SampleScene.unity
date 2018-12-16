@@ -317,6 +317,11 @@ Prefab:
       propertyPath: TileMap
       value: 
       objectReference: {fileID: 2021801073}
+    - target: {fileID: 114917327346444898, guid: 2dccea7cc22d7724aa9762f7da63a0d4,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2dccea7cc22d7724aa9762f7da63a0d4, type: 2}
   m_IsPrefabAsset: 0
@@ -1040,6 +1045,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   WarpIn: {fileID: 87995070}
   WarpOut: {fileID: 1550438591}
+  IsDead: 0
 --- !u!50 &1289248526
 Rigidbody2D:
   serializedVersion: 4

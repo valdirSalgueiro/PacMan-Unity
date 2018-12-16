@@ -32,7 +32,7 @@ namespace Assets.Ghosts.ChaseStrategies
                 positions = GameManager.GetPath(ghost.gridTiles.grid, start, goal);
                 lookAhead -= 1;
             }
-            while (positions == null || positions.Count() == 0);
+            while ((positions == null || positions.Count() == 0) && lookAhead >= 0);
             return goal;
         }
     }

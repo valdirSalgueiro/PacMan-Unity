@@ -166,7 +166,7 @@ namespace Assets
                 }
                 else if (!(state is GoingHomeState))
                 {
-                    player.IsDead = true;
+                    //player.IsDead = true;
                 }
             }
         }
