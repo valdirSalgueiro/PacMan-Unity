@@ -19,13 +19,9 @@ public class Player : MonoBehaviour
     private Animator animator;
     private Vector2 lastPosition;
 
-    private GridTiles grid;
-
     // Use this for initialization
     void Start()
     {
-        grid = GameManager.instance.InitGrid(TileMap, false);
-
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -79,33 +75,9 @@ public class Player : MonoBehaviour
 
             if (direction != desiredDirection)
             {
-                if (desiredDirection == Vector2.left)
+                if (!GameManager.instance.isWallOrGhostArea(TileMap, bodyPosition + desiredDirection))
                 {
-                    if (!GameManager.instance.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.left))
-                    {
-                        direction = Vector2Int.left;
-                    }
-                }
-                else if (desiredDirection == Vector2.right)
-                {
-                    if (!GameManager.instance.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.right))
-                    {
-                        direction = Vector2Int.right;
-                    }
-                }
-                else if (desiredDirection == Vector2.up)
-                {
-                    if (!GameManager.instance.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.up))
-                    {
-                        direction = Vector2Int.up;
-                    }
-                }
-                else if (desiredDirection == Vector2.down)
-                {
-                    if (!GameManager.instance.isWallOrGhostArea(TileMap, bodyPosition + Vector2Int.down))
-                    {
-                        direction = Vector2Int.down;
-                    }
+                    direction = desiredDirection;
                 }
             }
             var nextPosition = bodyPosition + direction;

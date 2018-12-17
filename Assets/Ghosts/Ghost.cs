@@ -79,6 +79,7 @@ namespace Assets
         public void SetFrightened()
         {
             if (!(state is DeadState || state is DeadState))
+            if (!(state is DeadState || state is GoingHomeState))
             {
                 SoundManager.instance.PlaySingle(frightned, 3);
                 state.Exit(this);
@@ -94,7 +95,7 @@ namespace Assets
             WarpIn = GameObject.Find("WarpIn");
             WarpOut = GameObject.Find("WarpOut");
 
-            gridTiles = GameManager.instance.InitGrid(TileMap, true);
+            gridTiles = GameManager.instance.InitGrid(TileMap);
 
             body = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();

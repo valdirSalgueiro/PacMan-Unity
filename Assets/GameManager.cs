@@ -180,7 +180,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public GridTiles InitGrid(Tilemap TileMap, bool isGhost)
+    public GridTiles InitGrid(Tilemap TileMap)
     {
         GridTiles tiles = new GridTiles();
         tiles.walkableTiles = new List<Vector2Int>();
@@ -190,8 +190,6 @@ public class GameManager : MonoBehaviour
         {
             for (int j = -startY; j < endY; j++)
             {
-                if (isGhost)
-                {
                     if (GameManager.instance.isWall(TileMap, new Vector2Int(i, j)))
                     {
                         grid.BlockCell(new Position(i + startX, j + startY));
@@ -200,14 +198,6 @@ public class GameManager : MonoBehaviour
                     {
                         tiles.walkableTiles.Add(new Vector2Int(i, j));
                     }
-                }
-                else
-                {
-                    if (GameManager.instance.isWallOrGhostArea(TileMap, new Vector2Int(i, j)))
-                    {
-                        grid.BlockCell(new Position(i + startX, j + startY));
-                    }
-                }
             }
         }
         tiles.grid = grid;
