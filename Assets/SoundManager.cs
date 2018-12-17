@@ -3,7 +3,9 @@ using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
-    public AudioSource efxSource;                   //Drag a reference to the audio source which will play the sound effects.
+    public AudioSource efxSource1;                   //Drag a reference to the audio source which will play the sound effects.
+    public AudioSource efxSource2;                   //Drag a reference to the audio source which will play the sound effects.
+    public AudioSource efxSource3;                   //Drag a reference to the audio source which will play the sound effects.
     public AudioSource musicSource;                 //Drag a reference to the audio source which will play the music.
     public static SoundManager instance = null;     //Allows other scripts to call functions from SoundManager.             
     public float lowPitchRange = .95f;              //The lowest a sound effect will be randomly pitched.
@@ -27,32 +29,48 @@ public class SoundManager : MonoBehaviour
 
 
     //Used to play single sound clips.
-    public void PlaySingle(AudioClip clip)
+    public void PlaySingle(AudioClip clip, int source)
     {
-        //Set the clip of our efxSource audio source to the clip passed in as a parameter.
-        efxSource.clip = clip;
-
-        //Play the clip.
-        efxSource.Play();
+        switch (source)
+        {
+            case 1:
+                efxSource1.clip = clip;
+                efxSource1.Play();
+                break;
+            case 2:
+                efxSource2.clip = clip;
+                efxSource2.Play();
+                break;
+            default:
+                efxSource3.clip = clip;
+                efxSource3.Play();
+                break;
+        }
     }
 
-
-    //RandomizeSfx chooses randomly between various audio clips and slightly changes their pitch.
-    public void RandomizeSfx(params AudioClip[] clips)
+    public void StartMusic()
     {
-        //Generate a random number between 0 and the length of our array of clips passed in.
-        int randomIndex = Random.Range(0, clips.Length);
+        musicSource.Play();
+    }
 
-        //Choose a random pitch to play back our clip at between our high and low pitch ranges.
-        float randomPitch = Random.Range(lowPitchRange, highPitchRange);
+    public void StopMusic()
+    {
+        musicSource.Stop();
+    }
 
-        //Set the pitch of the audio source to the randomly chosen pitch.
-        efxSource.pitch = randomPitch;
-
-        //Set the clip to the clip at our randomly chosen index.
-        efxSource.clip = clips[randomIndex];
-
-        //Play the clip.
-        efxSource.Play();
+    public void Stop(int source)
+    {
+        switch (source)
+        {
+            case 1:
+                efxSource1.Stop();
+                break;
+            case 2:
+                efxSource2.Stop();
+                break;
+            default:
+                efxSource3.Stop();
+                break;
+        }
     }
 }

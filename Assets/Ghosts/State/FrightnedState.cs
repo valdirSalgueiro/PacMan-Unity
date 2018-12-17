@@ -18,7 +18,7 @@ namespace Assets.Ghosts.State
 
         public void Exit(Ghost ghost)
         {
-            ghost.spriteRenderer.material.shader = shaderSpritesDefault;
+            ghost.spriteRenderer.material.shader = shaderSpritesDefault;            
         }
 
         public FrightnedState(Ghost ghost)

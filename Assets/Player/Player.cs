@@ -1,5 +1,6 @@
 ﻿using Assets;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
@@ -20,12 +21,9 @@ public class Player : MonoBehaviour
 
     private GridTiles grid;
 
-    public bool IsDead;    
-
     // Use this for initialization
     void Start()
     {
-        IsDead = false;
         grid = GameManager.instance.InitGrid(TileMap, false);
 
         body = GetComponent<Rigidbody2D>();
@@ -36,13 +34,16 @@ public class Player : MonoBehaviour
         desiredDirection = direction;
     }
 
+    public void Die()
+    {
+        GetComponent<SpriteRenderer>().enabled = false;
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (IsDead)
-        {
+        if (GameManager.instance.IsPaused())
             return;
-        }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {

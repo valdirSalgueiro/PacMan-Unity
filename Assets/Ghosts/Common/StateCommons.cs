@@ -9,10 +9,8 @@ namespace Assets.Ghosts.ChaseStrategies
 
         protected void UpdateCommons(Ghost ghost)
         {
-            if(ghost.player.IsDead)
-            {
+            if (GameManager.instance.IsPaused())
                 return;
-            }
 
             if (timer > 0)
             {

@@ -114,6 +114,9 @@ MonoBehaviour:
   player: {fileID: 0}
   TileMap: {fileID: 0}
   SpawningLocation: {x: 0, y: 0}
+  eatGhost: {fileID: 8300000, guid: e72876b21c1834344a4110d5c1451f83, type: 3}
+  playerDead: {fileID: 8300000, guid: 4e6996de56d666d408027bc2963e8c5f, type: 3}
+  frightned: {fileID: 8300000, guid: 9ca448462dfbe8249870baa7cf0a523f, type: 3}
   direction: {x: 0, y: 0}
   warpInPositionVector2: {x: 0, y: 0}
   warpOutPositionVector2: {x: 0, y: 0}

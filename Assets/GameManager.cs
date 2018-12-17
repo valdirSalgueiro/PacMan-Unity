@@ -1,11 +1,15 @@
 ﻿using Assets;
 using RoyT.AStar;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
 using Grid = RoyT.AStar.Grid;
+using Assets.Ghosts.State;
+using UnityEngine.UI;
+using System;
+using Random = UnityEngine.Random;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,17 +18,108 @@ public class GameManager : MonoBehaviour
     public GameObject BigPill;
     public GameObject PillContainer;
 
+    public Text ScoreText;
+    public Text StatusText;
+
     static int startX = 15;
     static int startY = 17;
 
     static int endX = 15;
     static int endY = 14;
 
-
     private List<Vector2> BigPillPositions;
     public GameObject BigPillGameObject;
 
     public static GameManager instance = null;
+
+    private GameObject[] ghostsGameObjects;
+
+    bool isPaused;
+
+    int score;
+    int pillsEaten;
+    int pillsTotal;
+    
+
+    void FixedUpdate()
+    {
+        if (Time.frameCount % 10 == 0)
+        {
+            CheckFrightned();
+        }
+    }
+
+    void CheckFrightned()
+    {
+        bool frightned = false;
+        foreach (GameObject ghostsGameObject in ghostsGameObjects)
+        {
+            var ghost = ghostsGameObject.GetComponent<Ghost>();
+            if (ghost.GetState() is FrightnedState)
+                frightned = true;
+        }
+        if (!frightned)
+        {
+            SoundManager.instance.Stop(3);
+        }
+    }
+
+    public void PauseGame(float timer)
+    {
+        isPaused = true;
+        Invoke("UnpauseGame", timer);
+    }
+
+    public void UnpauseGame()
+    {
+        isPaused = false;
+    }
+
+    public bool IsPaused()
+    {
+        return isPaused;
+    }
+
+    public void AddScore(int score)
+    {
+        if (score == 10 || score == 50)
+        {
+            pillsEaten++;
+            if (pillsEaten == pillsTotal)
+            {
+                PauseGame(10f);
+                Victory();
+            }
+        }
+
+        this.score += score;
+        ScoreText.text = "Score: " + this.score;
+    }
+
+    public void HideStatus()
+    {
+        StatusText.enabled = false;
+        ScoreText.enabled = true;
+    }
+
+    public void GameOver()
+    {
+        StatusText.text = "game over";
+        StatusText.enabled = true;
+        Invoke("ResetLevel", 3f);
+    }
+
+    void ResetLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    void Victory()
+    {
+        StatusText.text = "you win!";
+        StatusText.enabled = true;
+        Invoke("ResetLevel", 3f);
+    }
 
     // Use this for initialization
     void Awake()
@@ -37,6 +132,20 @@ public class GameManager : MonoBehaviour
         else if (instance != this)
             //Destroy this, this enforces our singleton pattern so there can only be one instance of SoundManager.
             Destroy(gameObject);
+
+        pillsEaten = 0;
+        pillsTotal = 0;
+        score = 0;
+        ScoreText.text = "Score: " + score;
+        StatusText.text = "get ready!";
+        ScoreText.enabled = false;
+        StatusText.enabled = true;
+        PauseGame(3f);
+        Invoke("HideStatus", 3f);
+
+        SoundManager.instance.StartMusic();
+
+        ghostsGameObjects = GameObject.FindGameObjectsWithTag("Enemy");
 
         BigPillPositions = BigPillGameObject.GetComponentsInChildren<Transform>().Select(gameobject => new Vector2(gameobject.transform.position.x / 16, gameobject.transform.position.y / 16)).ToList();
 
@@ -65,6 +174,7 @@ public class GameManager : MonoBehaviour
                         pill.transform.localPosition = new Vector3(i * 16, j * 16, 0);
                         BigPillPositions.Remove(new Vector2(i, j));
                     }
+                    pillsTotal++;
                 }
             }
         }

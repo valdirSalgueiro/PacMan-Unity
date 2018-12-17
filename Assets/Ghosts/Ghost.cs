@@ -19,6 +19,9 @@ namespace Assets
         public Player player;
         public Tilemap TileMap;
         public Vector2 SpawningLocation;
+        public AudioClip eatGhost;
+        public AudioClip playerDead;
+        public AudioClip frightned;
 
         public Vector2Int direction;
 
@@ -42,6 +45,11 @@ namespace Assets
         public GridTiles gridTiles;
 
         private Rigidbody2D body;
+
+        public IGhostState GetState()
+        {
+            return state;
+        }
 
         public GameObject GetScatterSpawns()
         {
@@ -72,6 +80,9 @@ namespace Assets
         {
             if (!(state is DeadState || state is DeadState))
             {
+                SoundManager.instance.PlaySingle(frightned, 3);
+                GameManager.instance.AddScore(200);
+                state.Exit(this);
                 state = new FrightnedState(this);
                 state.Start(this);
             }
@@ -151,7 +162,7 @@ namespace Assets
                 {
                     animator.SetTrigger("left");
                 }
-            }
+            }            
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -160,13 +171,19 @@ namespace Assets
             {
                 if(state is FrightnedState)
                 {
+                    GameManager.instance.PauseGame(0.5f);
+                    SoundManager.instance.PlaySingle(eatGhost, 2);
                     state.Exit(this);
                     state = new GoingHomeState(this);
                     state.Start(this);
                 }
                 else if (!(state is GoingHomeState))
                 {
-                    //player.IsDead = true;
+                    SoundManager.instance.PlaySingle(playerDead, 2);
+                    GameManager.instance.PauseGame(10f);
+                    GameManager.instance.GameOver();
+                    SoundManager.instance.StopMusic();
+                    player.Die();
                 }
             }
         }
