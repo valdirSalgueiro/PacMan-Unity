@@ -81,7 +81,6 @@ namespace Assets
             if (!(state is DeadState || state is DeadState))
             {
                 SoundManager.instance.PlaySingle(frightned, 3);
-                GameManager.instance.AddScore(200);
                 state.Exit(this);
                 state = new FrightnedState(this);
                 state.Start(this);
@@ -171,6 +170,7 @@ namespace Assets
             {
                 if(state is FrightnedState)
                 {
+                    GameManager.instance.AddScore(200);
                     GameManager.instance.PauseGame(0.5f);
                     SoundManager.instance.PlaySingle(eatGhost, 2);
                     state.Exit(this);
