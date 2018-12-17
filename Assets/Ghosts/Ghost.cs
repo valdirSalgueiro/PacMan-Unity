@@ -78,7 +78,6 @@ namespace Assets
 
         public void SetFrightened()
         {
-            if (!(state is DeadState || state is DeadState))
             if (!(state is DeadState || state is GoingHomeState))
             {
                 SoundManager.instance.PlaySingle(frightned, 3);
